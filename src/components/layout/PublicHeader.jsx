@@ -13,7 +13,7 @@ function PublicHeader() {
       <div className="max-w-6xl mx-auto flex justify-between items-center">
         {/* Logo */}
         <Link to="/" className="text-xl font-bold hover:text-amber-300">
-          خانه ی قهوه☕
+          سرزمین قهوه☕
         </Link>
 
         {/* Mobile Button */}
