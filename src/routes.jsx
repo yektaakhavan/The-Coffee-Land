@@ -11,8 +11,10 @@ import CheckOutPage from "./pages/public/CheckOutPage";
 import PaymentPage from "./pages/public/PaymentPage";
 import OrderSuccessPage from "./pages/public/OrderSuccessPage";
 import ArticlesPage from "./pages/public/ArticlesPage";
-import SignInPage from "./pages/public/SignInPage";
-import SignUpPage from "./pages/public/SignUpPage";
+
+//AUTH PAGE
+import SignInPage from "./pages/auth/SignInPage";
+import SignUpPage from "./pages/auth/SignUpPage";
 
 //LOGIN PAGE
 import LoginPage from "./pages/admin/LoginPage";
@@ -35,60 +37,65 @@ import SettingPage from "./pages/admin/SettingPage";
 
 //NOT FOUND PAGE
 import NotFoundPage from "./pages/NotFoundPage";
-import AuthContext from "./pages/admin/AuthContext";
 
 const routes = [
-  // SHOP PAGE
+  // ========== فروشگاه (با هدر و فوتر) ==========
   {
-    path: "/", 
     element: <PublicLayout />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: "/shop", element: <ShopPage /> },
-      { path: "/product/:slug", element: <ProductDetailPage /> },
-      { path: "/blog", element: <BlogPage /> },
-      { path: "/articles-page", element: <ArticlesPage /> },
-      { path: "/article/:slug", element: <ArticlePostPage /> },
-      { path: "/about", element: <AboutPage /> },
-      { path: "/contact", element: <ContactPage /> },
-      { path: "/cart", element: <CartPage /> },
-      { path: "/checkOut", element: <CheckOutPage /> },
-      { path: "/payment", element: <PaymentPage /> },
-      { path: "/order-success", element: <OrderSuccessPage /> },
-      { path: "/sign-in", element: <SignInPage /> },
-      { path: "/sign-up", element: <SignUpPage /> },
+      { path: "shop", element: <ShopPage /> },
+      { path: "product/:slug", element: <ProductDetailPage /> },
+      { path: "blog", element: <BlogPage /> },
+      { path: "articles-page", element: <ArticlesPage /> },
+      { path: "article/:slug", element: <ArticlePostPage /> },
+      { path: "about", element: <AboutPage /> },
+      { path: "contact", element: <ContactPage /> },
+      { path: "cart", element: <CartPage /> },
+      { path: "checkout", element: <CheckOutPage /> },
+      { path: "payment", element: <PaymentPage /> },
+      { path: "order-success", element: <OrderSuccessPage /> },
     ],
   },
 
-  //LOGIN PAGE
+  // ========== صفحات Auth (بدون هدر و فوتر) ==========
   {
-    path: "/login",
+    path: "auth",
+    children: [
+      { path: "sign-in", element: <SignInPage /> },
+      { path: "sign-up", element: <SignUpPage /> },
+    ],
+  },
+
+  // ========== لاگین ادمین (بدون هدر و فوتر) ==========
+  {
+    path: "login",
     element: <LoginPage />,
   },
 
-  //ADMIN PAGE
+  // ========== پنل ادمین (با سایدبار) ==========
   {
-    path: "/admin",
+    path: "admin",
     element: <AdminLayout />,
     children: [
       { index: true, element: <DashboardPage /> },
-      { path: "Auth-context", element: <AuthContext /> },
       { path: "blog", element: <ArticlePostPage /> },
       { path: "categories", element: <CategoryPage /> },
       { path: "coupons", element: <CouponsPage /> },
       { path: "customers", element: <CustomersPage /> },
-      { path: "customer-profile", element: <CustomerProfilePage /> },
-      { path: "order-detail", element: <OrderDetailCustomerPage /> },
+      { path: "customer-profile/:id", element: <CustomerProfilePage /> },
+      { path: "order-detail/:id", element: <OrderDetailCustomerPage /> },
       { path: "orders", element: <OrdersPage /> },
       { path: "products", element: <ProductsPage /> },
-      { path: "product-edit", element: <ProductEditPage /> },
-      { path: "add-Product", element: <AddProductPage /> },
-      { path: "reviews", element: <ReviewPage /> },
-      { path: "settings", element: <SettingPage /> },
+      { path: "product-edit/:id", element: <ProductEditPage /> },
+      { path: "add-product", element: <AddProductPage /> },
+      { path: "reviews", element: <ReviewsPage /> },
+      { path: "settings", element: <SettingsPage /> },
     ],
   },
 
-  //NOT FOUND PAGE
+  // ========== 404 ==========
   { path: "*", element: <NotFoundPage /> },
 ];
+
 export default routes;

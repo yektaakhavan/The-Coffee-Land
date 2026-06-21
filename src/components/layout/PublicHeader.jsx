@@ -48,7 +48,7 @@ function PublicHeader() {
           ))}
 
           <NavLink
-            to="/sign-in"
+            to="/auth/sign-in"
             className="flex items-center gap-2 bg-amber-700 hover:bg-amber-600 px-4 py-2 rounded-lg transition"
           >
             ورود / عضویت

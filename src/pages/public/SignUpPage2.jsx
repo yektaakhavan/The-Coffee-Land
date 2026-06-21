@@ -1,128 +1,144 @@
-import React from "react";
-import { useForm } from "react-hook-form";
+// import React from "react";
+// import { useForm } from "react-hook-form";
 
-function SignUpPage() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+// function SignUpPage() {
+//   const {
+//     register,
+//     handleSubmit,
+//     formState: { errors },
+//   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("داده‌های فرم:", data);
-  };
+//   const onSubmit = (data) => {
+//     console.log("داده‌های فرم:", data);
+//   };
 
-  return (
-    <div className="min-h-screen flex items-center justify-center p-6">
-      <div className="bg-white rounded-xl shadow-xl p-8 w-full max-w-md">
-        <div className="flex flex-col">
-          <div className="text-center mb-6">
-            <span className="text-5xl block mb-3">☕</span>
-            <h1 className="text-2xl font-bold text-amber-900">
-              عضویت در سرزمین قهوه
-            </h1>
-            <p className="text-gray-500 text-sm mt-2">
-              به خانواده قهوه دوست ها بپیوندید
-            </p>
-          </div>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-medium mb-2">
-                نام و نام خانوادگی
-              </label>
-              <input
-                {...register("fullName", { required: "فیلد اجباری" })}
-                type="text"
-                placeholder="مثال : سارا احمدی"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-              />
-              {errors.fullName && (
-                <p className="text-red-500 text-xs">
-                  {errors.fullName.message}
-                </p>
-              )}
-            </div>
+//   return (
+//     <div className="min-h-screen flex items-center justify-center p-6">
+//       <div className="bg-white rounded-xl shadow-xl p-8 w-full max-w-md">
+//         <div className="flex flex-col">
+//           <div className="text-center mb-6">
+//             <span className="text-5xl block mb-3">☕</span>
+//             <h1 className="text-2xl font-bold text-amber-900">
+//               عضویت در سرزمین قهوه
+//             </h1>
+//             <p className="text-gray-500 text-sm mt-2">
+//               به خانواده قهوه دوست ها بپیوندید
+//             </p>
+//           </div>
+//           <Form onSubmit={handleSubmit(onSubmit)}>
+//             <div className="mb-4">
+//               <label className="block text-gray-700 text-sm font-medium mb-2">
+//                 نام و نام خانوادگی
+//               </label>
+//               <input
+//                 {...register("fullName", { required: "فیلد اجباری" })}
+//                 type="text"
+//                 placeholder="مثال : سارا احمدی"
+//                 className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+//               />
+//               {errors.fullName && (
+//                 <p className="text-red-500 text-xs">
+//                   {errors.fullName.message}
+//                 </p>
+//               )}
+//             </div>
 
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-medium mb-2">
-                ایمیل
-              </label>
-              <input
-                {...register("email", {
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "ایمیل نامعتبر",
-                  },
-                })}
-                type="email"
-                placeholder="email@example.com"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-medium mb-2">
-                شماره تماس
-              </label>
-              <input
-                {...register(
-                  "phoneNumber",
-                  {
-                    pattern: {
-                      value: /^09[0-9]{9}$/,
-                      message: "شماره موبایل نامعتبر",
-                    },
-                  },
-                  { required: "فیلد اجباری" },
-                )}
-                type="text"
-                placeholder="09110001112"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-              />
-              {errors.phoneNumber && (
-                <p className="text-red-500 text-xs">
-                  {errors.phoneNumber.message}
-                </p>
-              )}
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-medium mb-2">
-                رمز عبور
-              </label>
-              <input
-                {...register(
-                  "password",
-                  {
-                    minLength: {
-                      value: 6,
-                      message: "رمز عبور حداقل ۶ کاراکتر",
-                    },
-                  },
-                  { required: "فیلد اجباری" },
-                )}
-                type="password"
-                placeholder="******"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-              />
-              {errors.password && (
-                <p className="text-red-500 text-xs">
-                  {errors.password.message}
-                </p>
-              )}
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-amber-800 text-white py-2 rounded-lg mt-6"
-            >
-              عضویت
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
-}
+//             <div className="mb-4">
+//               <label className="block text-gray-700 text-sm font-medium mb-2">
+//                 ایمیل
+//               </label>
+//               <input
+//                 {...register("email", {
+//                   pattern: {
+//                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+//                     message: "ایمیل نامعتبر",
+//                   },
+//                 })}
+//                 type="email"
+//                 placeholder="email@example.com"
+//                 className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+//               />
+//             </div>
+//             <div className="mb-4">
+//               <label className="block text-gray-700 text-sm font-medium mb-2">
+//                 شماره تماس
+//               </label>
+//               <input
+//                 {...register(
+//                   "phoneNumber",
+//                   {
+//                     pattern: {
+//                       value: /^09[0-9]{9}$/,
+//                       message: "شماره موبایل نامعتبر",
+//                     },
+//                   },
+//                   { required: "فیلد اجباری" },
+//                 )}
+//                 type="text"
+//                 placeholder="09110001112"
+//                 className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+//               />
+//               {errors.phoneNumber && (
+//                 <p className="text-red-500 text-xs">
+//                   {errors.phoneNumber.message}
+//                 </p>
+//               )}
+//             </div>
+//             <div className="mb-4">
+//               <label className="block text-gray-700 text-sm font-medium mb-2">
+//                 رمز عبور
+//               </label>
 
-export default SignUpPage;
+//               <input
+//                 {...register(
+//                   "password",
+//                   {
+//                     minLength: {
+//                       value: 6,
+//                       message: "رمز عبور حداقل ۶ کاراکتر",
+//                     },
+//                   },
+//                   { required: "فیلد اجباری" },
+//                 )}
+//                 type="password"
+//                 placeholder="******"
+//                 className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+//               />
+//               {errors.password && (
+//                 <p className="text-red-500 text-xs">
+//                   {errors.password.message}
+//                 </p>
+//               )}
+//             </div>
+
+//               {/* چک باکس مرا به خاطر بسپار */}
+//               <div className="flex items-center justify-between mt-4">
+//                 <label className="flex items-center text-sm text-gray-600">
+//                   <input
+//                     type="checkbox"
+//                     {...register("rememberMe")}
+//                     className="me-2 rounded border-gray-300"
+//                   />
+//                   مرا به خاطر بسپار
+//                 </label>
+
+//               </div>
+
+//               {/* دکمه عضویت */}
+//             <button
+//               type="submit"
+//               className="w-full bg-amber-800 text-white py-2 rounded-lg mt-6"
+//             >
+//               عضویت
+//             </button>
+//           </Form>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+// export default SignUpPage;
 
 // import { useForm } from "react-hook-form";
 
