@@ -1,21 +1,21 @@
 // با Register
-// برای پروژه من استفاده از Register بجای Controller بهتره چو فقط یه فرم سادس
+// برای پروژه من استفاده از Register بجای Controller بهتره چون فقط یه فرم سادس
+
 import React, { useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { HiOutlineLogin } from "react-icons/hi";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { UserInfoContext } from "../../context/AuthContext";
 import { useContext } from "react";
+import { UserInfoContext } from "../../context/AuthContext";
 
 function SignInPage() {
-  const { login, user } = useContext(UserInfoContext);
+  const { login } = useContext(UserInfoContext);
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
     reset,
-    watch,
     setValue,
     setError,
   } = useForm({
@@ -26,8 +26,6 @@ function SignInPage() {
       rememberMe: false,
     },
   });
-
-  const password = watch("password");
 
   const validateIdentifier = useCallback((value) => {
     if (!value) return "لطفا ایمیل یا شماره همراه را وارد کنید";
@@ -53,6 +51,7 @@ function SignInPage() {
 
   // ذخیره اطلاعات در localStorage وقتی فرم با موفقیت ارسال شد
   const saveToLocalStorage = (identifier, rememberMe) => {
+    // ذخیره remember me
     if (rememberMe) {
       localStorage.setItem("savedIdentifier", identifier);
     } else {
@@ -62,43 +61,31 @@ function SignInPage() {
 
   const navigate = useNavigate();
   const location = useLocation();
-
   const onSubmit = async (data) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((r) => setTimeout(r, 500)); // fake loading
 
-    const savedUser = JSON.parse(localStorage.getItem("registeredUser"));
+    const users = JSON.parse(localStorage.getItem("users")) || [];
 
-    if (!savedUser) {
+    const foundUser = users.find(
+      (u) => u.email === data.identifier && u.password === data.password,
+    );
+
+    // کاربر وجود ندارد
+    if (!foundUser) {
       setError("identifier", {
-        type: "manual",
-        message: "ابتدا ثبت نام کنید",
-      });
-      return;
-    }
-
-    if (
-      savedUser.email !== data.identifier ||
-      savedUser.password !== data.password
-    ) {
-      setError("password", {
         type: "manual",
         message: "ایمیل یا رمز عبور اشتباه است",
       });
       return;
     }
 
-    saveToLocalStorage(data.identifier, data.rememberMe);
-    login(data.identifier, data.password);
-
-    const saved = JSON.parse(localStorage.getItem("auth"));
+    login(foundUser);
 
     const from = location.state?.from?.pathname;
 
-    const role = saved?.user?.role;
-
-    const redirectTo = from || (role === "admin" ? "/admin" : "/");
-
-    navigate(redirectTo);
+    navigate(from || (foundUser.role === "admin" ? "/admin" : "/"), {
+      replace: true,
+    });
 
     reset();
   };

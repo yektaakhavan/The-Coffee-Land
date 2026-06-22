@@ -49,10 +49,13 @@ function SignUpPage() {
       fullName: data.fullName,
       email: data.email,
       password: data.password,
+      role: data.email === "admin@gmail.com" ? "admin" : "customer",
     };
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    users.push(newUser);
+    localStorage.setItem("users", JSON.stringify(users));
 
-    localStorage.setItem("registeredUser", JSON.stringify(newUser));
-
+    // localStorage.setItem("registeredUser", JSON.stringify(newUser));
 
     reset();
 
