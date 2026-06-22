@@ -77,10 +77,29 @@ const routes = [
   {
     path: "auth",
     children: [
-      { path: "sign-in", element: <SignInPage /> },
-      { path: "sign-up", element: <SignUpPage /> },
+      {
+        path: "sign-in",
+        element: (
+          <GuestRoute>
+            <SignInPage />
+          </GuestRoute>
+        ),
+      },
+      {
+        path: "sign-up",
+        element: (
+          <GuestRoute>
+            <SignUpPage />
+          </GuestRoute>
+        ),
+      },
     ],
   },
+
+//   مهمان → اجازه ورود
+// لاگین شده → اجازه ندارد
+
+// این الگوی استاندارد Auth Flow است.
 
   // ========== لاگین ادمین (بدون هدر و فوتر) ==========
   {
