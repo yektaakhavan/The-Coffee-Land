@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function SignUpPage() {
   const {
@@ -35,14 +35,28 @@ function SignUpPage() {
     return s;
   }, [hasLength, hasUpperCase, hasNumber, hasSpecialChar]);
 
+  const navigate = useNavigate();
+
   // Function
   // وقتی کاربر فرم رو submit می‌کنه، React Hook Form همه مقدار inputها رو جمع می‌کنه و داخل data می‌ریزه.
   const onSubmit = async (data) => {
-    console.log(data);
-
+    // console.log(data);
+    // localStorage.setItem("registeredUser", JSON.stringify(data));
+    //در کد بالا کل data ذخیره میشوند اما ما ذخیره ی ConfirmPassword را نیاز نداریم پس میتونم به شکل زیر بنویسیم.
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
+    const newUser = {
+      fullName: data.fullName,
+      email: data.email,
+      password: data.password,
+    };
+
+    localStorage.setItem("registeredUser", JSON.stringify(newUser));
+
+
     reset();
+
+    navigate("/auth/sign-in");
   };
 
   return (
@@ -175,7 +189,7 @@ function SignUpPage() {
             </div>
             {/* Sign In */}
             <div className="text-center mt-4 text-sm text-gray-600">
-              حساب کاربری دارید؟ {" "}
+              حساب کاربری دارید؟{" "}
               <Link
                 to="/auth/sign-in"
                 className="text-amber-700 font-medium hover:text-amber-900"

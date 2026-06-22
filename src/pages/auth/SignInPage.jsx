@@ -3,11 +3,13 @@
 import React, { useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { HiOutlineLogin } from "react-icons/hi";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { UserInfoContext } from "../../context/AuthContext";
 import { useContext } from "react";
 
 function SignInPage() {
+  const { login, user } = useContext(UserInfoContext);
+
   const {
     register,
     handleSubmit,
@@ -58,33 +60,45 @@ function SignInPage() {
     }
   };
 
-  const { login } = useContext(UserInfoContext);
-
   const navigate = useNavigate();
+  const location = useLocation();
 
   const onSubmit = async (data) => {
-    console.log(data);
-
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    // شبیه‌سازی خطای سرور
-    if (data.password !== "123456") {
-      setError("password", {
+    const savedUser = JSON.parse(localStorage.getItem("registeredUser"));
+
+    if (!savedUser) {
+      setError("identifier", {
         type: "manual",
-        message: "رمز عبور اشتباه است",
+        message: "ابتدا ثبت نام کنید",
       });
       return;
     }
 
-    // اگر همه چی درست بود
+    if (
+      savedUser.email !== data.identifier ||
+      savedUser.password !== data.password
+    ) {
+      setError("password", {
+        type: "manual",
+        message: "ایمیل یا رمز عبور اشتباه است",
+      });
+      return;
+    }
+
     saveToLocalStorage(data.identifier, data.rememberMe);
-
-    alert("ورود موفقیت آمیز بود!");
-
-    
-
     login(data.identifier, data.password);
-    navigate(data.identifier === "admin" ? "/admin" : "/");
+
+    const saved = JSON.parse(localStorage.getItem("auth"));
+
+    const from = location.state?.from?.pathname;
+
+    const role = saved?.user?.role;
+
+    const redirectTo = from || (role === "admin" ? "/admin" : "/");
+
+    navigate(redirectTo);
 
     reset();
   };

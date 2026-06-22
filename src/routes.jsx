@@ -37,6 +37,7 @@ import SettingPage from "./pages/admin/SettingPage";
 
 //NOT FOUND PAGE
 import NotFoundPage from "./pages/NotFoundPage";
+import ProtectedRoute from "./components/shared/ProtectedRoute";
 
 const routes = [
   // ========== فروشگاه (با هدر و فوتر) ==========
@@ -51,8 +52,22 @@ const routes = [
       { path: "article/:slug", element: <ArticlePostPage /> },
       { path: "about", element: <AboutPage /> },
       { path: "contact", element: <ContactPage /> },
-      { path: "cart", element: <CartPage /> },
-      { path: "checkout", element: <CheckOutPage /> },
+      {
+        path: "cart",
+        element: (
+          <ProtectedRoute>
+            <CartPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "checkout",
+        element: (
+          <ProtectedRoute>
+            <CheckOutPage />
+          </ProtectedRoute>
+        ),
+      },
       { path: "payment", element: <PaymentPage /> },
       { path: "order-success", element: <OrderSuccessPage /> },
     ],
@@ -76,7 +91,11 @@ const routes = [
   // ========== پنل ادمین (با سایدبار) ==========
   {
     path: "admin",
-    element: <AdminLayout />,
+    element: (
+      <ProtectedRoute role="admin">
+        <AdminLayout />
+      </ProtectedRoute>
+    ),
     children: [
       { index: true, element: <DashboardPage /> },
       { path: "blog", element: <ArticlePostPage /> },
@@ -89,8 +108,8 @@ const routes = [
       { path: "products", element: <ProductsPage /> },
       { path: "product-edit/:id", element: <ProductEditPage /> },
       { path: "add-product", element: <AddProductPage /> },
-      { path: "reviews", element: <ReviewsPage /> },
-      { path: "settings", element: <SettingsPage /> },
+      { path: "reviews", element: <ReviewPage /> },
+      { path: "settings", element: <SettingPage /> },
     ],
   },
 

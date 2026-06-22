@@ -1,29 +1,51 @@
-import React, { createContext, useState } from "react";
-import SignInPage from "../pages/auth/SignInPage";
+import React, { createContext, useEffect, useState } from "react";
 
 export const UserInfoContext = createContext();
 
-function AuthProvider() {
-  const [user, setUser] = useState("");
+function AuthProvider({ children }) {
+  const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const login = (username, password) => {
-    if (username === "admin" && password === "admin") {
-      setUser({ username: "admin", role: "admin" });
-      setIsAuthenticated(true);
-      setIsAdmin(true);
-    } else {
-      setUser({ username, role: "Customer" });
-      setIsAuthenticated(true);
-      setIsAdmin(false);
-    }
-  };
+  // login → setState + save localStorage
+  // reload → read localStorage → restore state
+  // logout → clear both
 
+  // وقتی App reload شد
+  useEffect(() => {
+    const savedAuth = JSON.parse(localStorage.getItem("auth"));
+
+    if (savedAuth) {
+      setUser(savedAuth.user);
+      setIsAuthenticated(savedAuth.isAuthenticated);
+      setIsAdmin(savedAuth.isAdmin);
+    }
+  }, []);
+
+  const login = (username, password) => {
+    const isAdminUser = username === "admin" && password === "admin";
+
+    const authData = {
+      user: {
+        username,
+        role: isAdminUser ? "admin" : "customer",
+      },
+      isAuthenticated: true,
+      isAdmin: isAdminUser,
+    };
+
+    setUser(authData.user);
+    setIsAuthenticated(true);
+    setIsAdmin(isAdminUser);
+
+    localStorage.setItem("auth", JSON.stringify(authData));
+  };
   const logout = () => {
     setUser(null);
     setIsAuthenticated(false);
     setIsAdmin(false);
+
+    localStorage.removeItem("auth");
   };
 
   const AuthPackage = {
@@ -34,11 +56,10 @@ function AuthProvider() {
     logout,
   };
 
-  
   return (
     <>
       <UserInfoContext.Provider value={AuthPackage}>
-        <App />
+        {children}
       </UserInfoContext.Provider>
     </>
   );

@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { HiOutlineLogin } from "react-icons/hi";
 import { HiXMark } from "react-icons/hi2";
 import { CgMenuGridO } from "react-icons/cg";
 import { menuItems } from "../../data/menuItems";
+import { UserInfoContext } from "../../context/AuthContext";
 
 function PublicHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false); //Mobile Menu is Close
 
+  const { user, isAuthenticated, logout } = useContext(UserInfoContext);
+  console.log(user, isAuthenticated);
   return (
     <header className="bg-amber-900 text-white p-4 sticky top-0 z-50">
       <div className="max-w-6xl mx-auto flex justify-between items-center">
@@ -47,13 +50,22 @@ function PublicHeader() {
             </NavLink>
           ))}
 
-          <NavLink
-            to="/auth/sign-in"
-            className="flex items-center gap-2 bg-amber-700 hover:bg-amber-600 px-4 py-2 rounded-lg transition"
-          >
-            ورود / عضویت
-            <HiOutlineLogin className="text-xl" />
-          </NavLink>
+          {!isAuthenticated ? (
+            <NavLink
+              to="/auth/sign-in"
+              className="flex items-center gap-2 bg-amber-700 hover:bg-amber-600 px-4 py-2 rounded-lg transition"
+            >
+              ورود / عضویت
+              <HiOutlineLogin className="text-xl" />
+            </NavLink>
+          ) : (
+            <div className="flex items-center gap-3">
+              <span>{user?.username || "User"}</span>
+              <button onClick={logout} className="text-red-300">
+                خروج
+              </button>
+            </div>
+          )}
         </nav>
       </div>
 
