@@ -1,16 +1,66 @@
-# React + Vite
+# ☕ Coffee Shop Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern coffee shop e-commerce web application built with React.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Features
 
-## React Compiler
+- User authentication (Sign up / Sign in)
+- Role-based access (Admin / Customer)
+- Protected routes
+- Shopping cart system
+- Responsive UI
+- LocalStorage-based auth (temporary backend simulation)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React.js
+- React Router
+- React Hook Form
+- Context API
+- Tailwind CSS
+
+---
+
+## 📂 Project Structure
+
+
+src/
+components/
+pages/
+context/
+routes/
+
+
+---
+
+## 🔐 Authentication Flow
+
+- Users can sign up and login
+- Auth state stored in Context + localStorage
+- Protected routes redirect unauthorized users
+
+---
+
+## 📸 Screenshots
+
+(Add screenshots here later)
+
+---
+
+## 📦 Installation
+
+```bash
+npm install
+npm run dev
+📌 Future Improvements
+Backend integration (Node.js / Firebase)
+Database for users & products
+Payment gateway
+Admin dashboard analytics
+👨‍💻 Author
+
+Yekta Akhavan
