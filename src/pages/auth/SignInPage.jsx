@@ -66,15 +66,21 @@ function SignInPage() {
 
     const users = JSON.parse(localStorage.getItem("users")) || [];
 
-    const foundUser = users.find(
-      (u) => u.email === data.identifier && u.password === data.password,
-    );
+    const foundUser = users.find((u) => u.email === data.identifier);
 
     // کاربر وجود ندارد
     if (!foundUser) {
       setError("identifier", {
         type: "manual",
-        message: "ایمیل یا رمز عبور اشتباه است",
+        message: "کاربری با این ایمیل پیدا نشد",
+      });
+      return;
+    }
+
+    if (foundUser.password !== data.password) {
+      setError("password", {
+        type: "manual",
+        message: "رمز عبور اشتباه است",
       });
       return;
     }

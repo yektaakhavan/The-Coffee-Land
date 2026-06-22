@@ -9,6 +9,7 @@ function SignUpPage() {
     watch,
     formState: { errors, isSubmitting, isValid },
     reset,
+    setError,
   } = useForm({
     mode: "onChange",
   });
@@ -51,7 +52,20 @@ function SignUpPage() {
       password: data.password,
       role: data.email === "admin@gmail.com" ? "admin" : "customer",
     };
+
     const users = JSON.parse(localStorage.getItem("users")) || [];
+
+    //users.some:می‌گردد ببیند حداقل یک کاربر با این ایمیل هست یا نه.
+    const isUserExist = users.some((user) => user.email === data.email);
+
+    if (isUserExist) {
+      setError("email", {
+        type: "manual",
+        message: "این ایمیل قبلا ثبت شده است",
+      });
+      return;
+    }
+
     users.push(newUser);
     localStorage.setItem("users", JSON.stringify(users));
 

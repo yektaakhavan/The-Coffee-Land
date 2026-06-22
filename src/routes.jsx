@@ -38,6 +38,7 @@ import SettingPage from "./pages/admin/SettingPage";
 //NOT FOUND PAGE
 import NotFoundPage from "./pages/NotFoundPage";
 import ProtectedRoute from "./components/shared/ProtectedRoute";
+import GuestRoute from "./components/shared/GuestRoute";
 
 const routes = [
   // ========== فروشگاه (با هدر و فوتر) ==========

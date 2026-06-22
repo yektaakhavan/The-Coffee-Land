@@ -9,7 +9,8 @@ import { UserInfoContext } from "../../context/AuthContext";
 function PublicHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false); //Mobile Menu is Close
 
-  const { user, isAuthenticated, logout } = useContext(UserInfoContext);
+  const { user, isAuthenticated, isAdmin, logout } =
+    useContext(UserInfoContext);
   console.log(user, isAuthenticated);
   return (
     <header className="bg-amber-900 text-white p-4 sticky top-0 z-50">
@@ -28,7 +29,7 @@ function PublicHeader() {
             {isMenuOpen ? <HiXMark /> : <CgMenuGridO />}
           </button>
 
-          <Link to="/login" className="text-2xl">
+          <Link to="/auth/sign-in" className="text-2xl">
             <HiOutlineLogin />
           </Link>
         </div>
@@ -60,10 +61,13 @@ function PublicHeader() {
             </NavLink>
           ) : (
             <div className="flex items-center gap-3">
-              <span>{user?.username || "User"}</span>
-              <button onClick={logout} className="text-red-300">
-                خروج
-              </button>
+              {isAdmin ? (
+                <NavLink to="/admin">پنل مدیریت</NavLink>
+              ) : (
+                <span>{user?.fullName}</span>
+              )}
+
+              <button onClick={logout}>خروج</button>
             </div>
           )}
         </nav>
