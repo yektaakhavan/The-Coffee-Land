@@ -7,7 +7,7 @@ import {
   FaTelegramPlane,
   FaWhatsapp,
 } from "react-icons/fa";
-import coffeeTime from "../../assets/images/coffee/coffee-time.png";
+import coffeeTime from "../../assets/images/product/coffee-time.png";
 
 function PublicFooter() {
   return (

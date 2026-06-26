@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import ProductCard from "../../components/shop/ProductCard";
 
 function ShopPage() {
   return (
-    <div>ShopPage</div>
-  )
+    <>
+      <ProductCard />
+    </>
+  );
 }
 
-export default ShopPage
+export default ShopPage;
