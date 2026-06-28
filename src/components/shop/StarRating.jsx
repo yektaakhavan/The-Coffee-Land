@@ -1,13 +1,21 @@
-import products from "../../data/products";
+import React from "react";
+import { MdOutlineStarPurple500 } from "react-icons/md";
+import { MdOutlineStarOutline } from "react-icons/md";
 
-function StarRating({ rating = 0, count = 0 }) {
+function StarRating({ count = 0, rating = 0 }) {
   return (
-    <div className="flex items-center gap-1 text-yellow-500">
-      {"★".repeat(Math.floor(rating))}
-      {"☆".repeat(5 - Math.floor(rating))}
-      <span className="text-gray-500 text-sm mr-2">{rating}</span>
+    <div className="flex items-center gap-1">
+      {/* filled stars */}
+      {Array.from({ length: Math.floor(rating) }).map((_, index) => (
+        <MdOutlineStarPurple500 key={index} className="text-yellow-400" />
+      ))}
+      {/* empty stars */}
+      {Array.from({ length: 5 - Math.floor(rating) }).map((_, index) => (
+        <MdOutlineStarOutline key={index} className="text-gray-300" />
+      ))}
+      <p className="text-sm text-gray-500 mr-2">{rating}</p>
       {count > 0 && (
-        <span className="text-gray-400 text-sm">({count} نظر)</span>
+        <p className="text-sm text-gray-400">({count} نظر)</p>
       )}
     </div>
   );

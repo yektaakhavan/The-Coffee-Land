@@ -1,63 +1,95 @@
-import React from "react";
-import products from "../../data/products";
+import { Link } from "react-router-dom";
 import StarRating from "../shop/StarRating";
 import Badge from "./Badge";
+import formatPrice from "../../utils/formatPrice";
 
-function ProductCard() {
+function ProductCard({ product }) {
   return (
-    <div className="min-h-scree p-6">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold text-amber-900 mb-6">
-          🛒 فروشگاه قهوه
-        </h1>
+    <div className="group relative rounded-[30px] p-[1px] bg-gradient-to-br from-white/70 via-amber-100/40 to-orange-200/30">
+      {/* Outer glow */}
+      <div className="absolute inset-0 rounded-[30px] bg-amber-300/20 blur-2xl opacity-0 group-hover:opacity-100 transition duration-500"></div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {products.map((product) => (
-            <div
-              key={product.id}
-              className="bg-white rounded-xl shadow p-4 hover:shadow-lg transition block"
-            >
-              {/* <div className="flex flex-col justify-between"> */}
-              <img
-                className="w-64 h-55 rounded-lg mb-3 transition"
-                src={product.image}
-                alt=""
-              />
-              <h3 className="text-amber-950 text-xl">{product.name}</h3>
-              <p className="my-2">
-                {/* {product.rating} */}
-                <StarRating
-                  rating={product.rating}
-                  count={product.reviewCount}
-                />
-              </p>
-              {/* نمایش نت‌های طعم به صورت تگ‌های جداگانه */}
-              {/* <div className="flex flex-wrap gap-2 justify-end my-2">
-                {product.flavorNotes.map((note, index) => (
-                  <span
-                    key={index}
-                    className="bg-amber-200 text-amber-800 text-xs px-3 py-1 rounded-full"
-                  >
-                    {note}
-                  </span>
-                ))}
-              </div> */}
+      {/* Card */}
+      <div className="relative overflow-hidden rounded-[30px] border border-white/50 bg-white/75 backdrop-blur-xl shadow-[0_10px_35px_rgba(0,0,0,0.08)] group-hover:-translate-y-2 group-hover:shadow-[0_20px_45px_rgba(120,53,15,0.18)] transition duration-500">
+        {/* Image Section */}
+        <div className="relative overflow-hidden">
+          <img
+            src={product.image}
+            alt={product.name}
+            className="w-full h-64 object-cover group-hover:scale-110 transition duration-700"
+          />
 
-              {/* استفاده از Badge برای نت‌های طعم */}
-              <div className="flex flex-wrap gap-2 justify-end my-2">
-                {product.flavorNotes.map((note, index) => (
-                  <Badge key={index} type="flavor">
-                    {note}
-                  </Badge>
-                ))}
-              </div>
-              <hr />
-              <p className=" py-2 px-3">
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+
+          {/* Discount badge */}
+          {product.discountPercent > 0 && (
+            <div className="absolute top-0 right-4 z-20">
+              <Badge type="discount">%{product.discountPercent}</Badge>
+            </div>
+          )}
+
+          {/* Available Product */}
+          {product.stock <= 0 && (
+            <div className="absolute top-0 left-0 z-20">
+              <Badge type="stock">ناموجود</Badge>
+            </div>
+          )}
+        </div>
+
+        {/* Content */}
+        <div className="p-5">
+          {/* Title */}
+          <div className="mb-3">
+            <h3 className="text-xl font-bold text-stone-800 tracking-tight">
+              {product.name}
+            </h3>
+
+            <p className="text-sm text-stone-500 mt-1">
+              Premium Coffee Selection
+            </p>
+          </div>
+          {/* Star Rating */}
+          <div className="mb-4">
+            <StarRating rating={product.rating} count={product.reviewCount} />
+          </div>
+          {/* flavor note */}
+          <div className="flex flex-wrap gap-2 mb-2">
+            {product.flavorNotes.map((note, index) => (
+              <Badge key={index} type="flavor">
+                {note}
+              </Badge>
+            ))}
+          </div>
+          {/* Divider */}
+          <div className="w-full h-px bg-gradient-to-r from-transparent via-amber-300 to-transparent mb-4"></div>
+          {/* Price */}
+          <div className="flex-coloumn">
+            <p>قیمت</p>
+            <div className="flex justify-between items-center">
+              {/* original price */}
+              <p
+                className={`${
+                  product.discountPercent > 0
+                    ? "text-gray-400 line-through text-sm"
+                    : "text-amber-900 text-lg font-bold"
+                }`}
+              >
                 {product.basePrice.toLocaleString("fa-IR")} تومان
               </p>
+
+              {/* discounted price */}
+              {product.discountPercent > 0 && (
+                <p className="text-amber-900 text-lg font-bold">
+                  <p>{formatPrice(product.basePrice)}</p>
+                </p>
+              )}
             </div>
-            // </div>
-          ))}
+          </div>
+          {/* Product Details */}
+          <button className="w-full mt-4 py-3 rounded-2xl bg-gradient-to-r from-amber-800 to-orange-700 text-white font-medium tracking-wide shadow-[0_8px_20px_rgba(120,53,15,0.25)] hover:shadow-[0_12px_25px_rgba(120,53,15,0.35)] hover:scale-[1.02] transition duration-300">
+            مشاهده
+          </button>
         </div>
       </div>
     </div>

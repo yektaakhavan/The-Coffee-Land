@@ -80,7 +80,7 @@ const products = [
     basePrice: 200000,
     discountPercent: 0,
     finalPrice: 200000,
-    stock: 23,
+    stock: 0,
     image: "/src/assets/images/product/04.jpg",
     flavorNotes: ["مرکبات", "انگور سیاه"],
     acidity: "بالا",
