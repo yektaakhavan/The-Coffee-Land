@@ -81,7 +81,7 @@ function ProductCard({ product }) {
               {/* discounted price */}
               {product.discountPercent > 0 && (
                 <p className="text-amber-900 text-lg font-bold">
-                  <p>{formatPrice(product.basePrice)}</p>
+                  <p>{formatPrice(product.finalPrice)}</p>
                 </p>
               )}
             </div>

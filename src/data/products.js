@@ -129,7 +129,7 @@ const products = [
     discountPercent: 0,
     finalPrice: 130000,
     stock: 40,
-    image: "/src/assets/images/product/01.jpg",
+    image: "/src/assets/images/product/06.jpg",
     flavorNotes: ["هل", "ادویه شیرین"],
     acidity: "پایین",
     bitterness: "متوسط",
