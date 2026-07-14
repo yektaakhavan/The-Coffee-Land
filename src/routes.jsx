@@ -16,8 +16,6 @@ import ArticlesPage from "./pages/public/ArticlesPage";
 import SignInPage from "./pages/auth/SignInPage";
 import SignUpPage from "./pages/auth/SignUpPage";
 
-//LOGIN PAGE
-import LoginPage from "./pages/admin/LoginPage";
 
 //ADMIN PAGE
 import AdminLayout from "./components/layout/AdminLayout";

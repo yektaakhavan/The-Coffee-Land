@@ -1,3 +1,10 @@
+import product01 from "../assets/images/product/01.jpg";
+import product02 from "../assets/images/product/02.jpg";
+import product03 from "../assets/images/product/03.jpg";
+import product04 from "../assets/images/product/04.jpg";
+import product05 from "../assets/images/product/05.jpg";
+import product06 from "../assets/images/product/06.jpg";
+
 const products = [
   {
     id: 1,
@@ -9,7 +16,7 @@ const products = [
     discountPercent: 10,
     finalPrice: 162000,
     stock: 45,
-    image: "/src/assets/images/product/01.jpg",
+    image: product01,
     flavorNotes: ["بلوبری", "شکلات تلخ", "گل یاس"],
     acidity: "بالا",
     bitterness: "متوسط",
@@ -33,7 +40,7 @@ const products = [
     discountPercent: 0,
     finalPrice: 160000,
     stock: 67,
-    image: "/src/assets/images/product/02.jpg",
+    image: product02,
     flavorNotes: ["کارامل", "آجیل", "سیب قرمز"],
     acidity: "متوسط",
     bitterness: "متوسط",
@@ -57,7 +64,7 @@ const products = [
     discountPercent: 15,
     finalPrice: 119000,
     stock: 92,
-    image: "/src/assets/images/product/03.jpg",
+    image: product03,
     flavorNotes: ["شکلات", "فندق"],
     acidity: "پایین",
     bitterness: "متوسط",
@@ -81,7 +88,7 @@ const products = [
     discountPercent: 0,
     finalPrice: 200000,
     stock: 0,
-    image: "/src/assets/images/product/04.jpg",
+    image: product04,
     flavorNotes: ["مرکبات", "انگور سیاه"],
     acidity: "بالا",
     bitterness: "پایین",
@@ -105,7 +112,7 @@ const products = [
     discountPercent: 5,
     finalPrice: 142500,
     stock: 55,
-    image: "/src/assets/images/product/05.jpg",
+    image: product05,
     flavorNotes: ["شکلات تلخ", "ادویه"],
     acidity: "پایین",
     bitterness: "بالا",
@@ -129,7 +136,7 @@ const products = [
     discountPercent: 0,
     finalPrice: 130000,
     stock: 40,
-    image: "/src/assets/images/product/06.jpg",
+    image: product06,
     flavorNotes: ["هل", "ادویه شیرین"],
     acidity: "پایین",
     bitterness: "متوسط",
