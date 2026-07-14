@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import StarRating from "../shop/StarRating";
 import Badge from "./Badge";
-import ProductPrice from "./ProductPrice";
+import formatPrice from "../../utils/formatPrice";
 
 function ProductCard({ product }) {
   return (
@@ -30,7 +30,11 @@ function ProductCard({ product }) {
           )}
 
           {/* Available Product */}
-          {product.stock <= 0 && <Badge type="stock">ناموجود</Badge>}
+          {product.stock <= 0 && (
+            <div className="absolute top-0 left-0 z-20">
+              <Badge type="stock">ناموجود</Badge>
+            </div>
+          )}
         </div>
 
         {/* Content */}
@@ -59,11 +63,36 @@ function ProductCard({ product }) {
           </div>
           {/* Divider */}
           <div className="w-full h-px bg-gradient-to-r from-transparent via-amber-300 to-transparent mb-4"></div>
-          <ProductPrice product={product} />
+          {/* Price */}
+          <div className="flex-coloumn">
+            <p>قیمت</p>
+            <div className="flex justify-between items-center">
+              {/* original price */}
+              <p
+                className={`${
+                  product.discountPercent > 0
+                    ? "text-gray-400 line-through text-sm"
+                    : "text-amber-900 text-lg font-bold"
+                }`}
+              >
+                {product.basePrice.toLocaleString("fa-IR")} تومان
+              </p>
+
+              {/* discounted price */}
+              {product.discountPercent > 0 && (
+                <p className="text-amber-900 text-lg font-bold">
+                  <p>{formatPrice(product.finalPrice)}</p>
+                </p>
+              )}
+            </div>
+          </div>
           {/* Product Details */}
-          <button className="w-full mt-4 py-3 rounded-2xl bg-gradient-to-r from-amber-800 to-orange-700 text-white font-medium tracking-wide shadow-[0_8px_20px_rgba(120,53,15,0.25)] hover:shadow-[0_12px_25px_rgba(120,53,15,0.35)] hover:scale-[1.02] transition duration-300">
+          <Link
+            to={`/product/${product.slug}`}
+            className="block w-full mt-4 py-3 rounded-2xl bg-gradient-to-r from-amber-800 to-orange-700 text-white font-medium text-center shadow-[0_8px_20px_rgba(120,53,15,0.25)] hover:shadow-[0_12px_25px_rgba(120,53,15,0.35)] hover:scale-[1.02] transition duration-300"
+          >
             مشاهده
-          </button>
+          </Link>
         </div>
       </div>
     </div>

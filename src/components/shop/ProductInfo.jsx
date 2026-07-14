@@ -1,50 +1,51 @@
+import Badge from "./Badge";
 import StarRating from "./StarRating";
+import formatPrice from "../../utils/formatPrice";
 
 function ProductInfo({ product }) {
   return (
-    <div className="space-y-5">
-      {/* Title */}
+    <div className="space-y-6">
       <div>
-        <h1 className="text-4xl font-bold text-gray-800">{product.name}</h1>
+        <h1 className="text-4xl font-bold text-stone-800">{product.name}</h1>
 
-        <p className="text-gray-500 mt-2">{product.description}</p>
+        <p className="text-gray-500 mt-2">{product.origin}</p>
       </div>
 
-      {/* Rating */}
-      <div className="flex items-center gap-3">
-        <StarRating rating={product.rating} />
+      <StarRating rating={product.rating} count={product.reviewCount} />
 
-        <span className="text-amber-700 font-semibold">{product.rating}</span>
-
-        <span className="text-gray-400">({product.reviewCount} نظر)</span>
+      <div className="flex flex-wrap gap-2">
+        {product.flavorNotes.map((note) => (
+          <Badge key={note} type="flavor">
+            {note}
+          </Badge>
+        ))}
       </div>
 
-      {/* Product Info */}
       <div className="grid grid-cols-2 gap-4">
-        <div className="bg-stone-100 rounded-xl p-4">
-          <p className="text-gray-500 text-sm">کشور مبدا</p>
+        <InfoItem title="رست" value={product.roastLevel} />
 
-          <p className="font-semibold">{product.origin}</p>
-        </div>
+        <InfoItem title="اسیدیته" value={product.acidity} />
 
-        <div className="bg-stone-100 rounded-xl p-4">
-          <p className="text-gray-500 text-sm">درجه رست</p>
+        <InfoItem title="تلخی" value={product.bitterness} />
 
-          <p className="font-semibold">{product.roastLevel}</p>
-        </div>
-
-        <div className="bg-stone-100 rounded-xl p-4">
-          <p className="text-gray-500 text-sm">موجودی</p>
-
-          <p className="font-semibold">{product.stock} بسته</p>
-        </div>
-
-        <div className="bg-stone-100 rounded-xl p-4">
-          <p className="text-gray-500 text-sm">دسته بندی</p>
-
-          <p className="font-semibold">{product.category}</p>
-        </div>
+        <InfoItem title="بادی" value={product.body} />
       </div>
+
+      <div className="border-t pt-6">
+        <p className="text-3xl font-bold text-amber-900">
+          {formatPrice(product.finalPrice)}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function InfoItem({ title, value }) {
+  return (
+    <div className="rounded-xl bg-stone-100 p-4">
+      <p className="text-xs text-gray-500">{title}</p>
+
+      <p className="font-semibold mt-1">{value}</p>
     </div>
   );
 }
