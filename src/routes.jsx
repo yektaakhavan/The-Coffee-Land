@@ -49,8 +49,8 @@ const routes = [
       { path: "shop", element: <ShopPage /> },
       { path: "product/:slug", element: <ProductDetailPage /> },
       { path: "blog", element: <BlogPage /> },
-      { path: "articles-page", element: <ArticlesPage /> },
-      { path: "article/:slug", element: <ArticlePostPage /> },
+      { path: "articles", element: <ArticlesPage /> },
+      { path: "articles/:slug", element: <ArticlePostPage /> },
       { path: "about", element: <AboutPage /> },
       { path: "contact", element: <ContactPage /> },
       {
@@ -97,16 +97,10 @@ const routes = [
     ],
   },
 
-//   مهمان → اجازه ورود
-// لاگین شده → اجازه ندارد
+  //   مهمان → اجازه ورود
+  // لاگین شده → اجازه ندارد
 
-// این الگوی استاندارد Auth Flow است.
-
-  // ========== لاگین ادمین (بدون هدر و فوتر) ==========
-  {
-    path: "login",
-    element: <LoginPage />,
-  },
+  // این الگوی استاندارد Auth Flow است.
 
   // ========== پنل ادمین (با سایدبار) ==========
   {
