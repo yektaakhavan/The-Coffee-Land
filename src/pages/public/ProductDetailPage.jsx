@@ -8,8 +8,12 @@ import Badge from "../../components/shop/Badge";
 
 import formatPrice from "../../utils/formatPrice";
 
+import { useContext } from "react";
+import { CartContext } from "../../context/CartContext";
+
 function ProductDetailPage() {
   const { slug } = useParams();
+  const { addToCart } = useContext(CartContext);
 
   const product = products.find((item) => item.slug === slug);
 
@@ -200,7 +204,14 @@ function ProductDetailPage() {
 
             {/* Add Cart */}
 
-            <button className="w-full mt-8 bg-amber-800 hover:bg-amber-700 transition text-white py-4 rounded-2xl text-lg font-bold">
+            <button
+              onClick={() => {
+                addToCart(product, quantity, selectedSize);
+
+                alert("محصول به سبد خرید اضافه شد.");
+              }}
+              className="w-full mt-8 bg-amber-800 hover:bg-amber-700 transition text-white py-4 rounded-2xl text-lg font-bold"
+            >
               افزودن به سبد خرید
             </button>
           </div>
