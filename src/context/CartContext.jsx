@@ -2,29 +2,40 @@ import { createContext, useEffect, useMemo, useState } from "react";
 
 export const CartContext = createContext();
 
+const FREE_SHIPPING_LIMIT = 500000;
+const SHIPPING_COST = 50000;
+
 function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
 
-  // ================= Load Cart =================
+  // =============================
+  // Load Cart
+  // =============================
 
   useEffect(() => {
     const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
     setCartItems(savedCart);
   }, []);
 
-  // ================= Save Cart =================
+  // =============================
+  // Save Cart
+  // =============================
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  // ================= Add =================
+  // =============================
+  // Add To Cart
+  // =============================
 
   const addToCart = (product) => {
     setCartItems((prev) => {
       const exist = prev.find((item) => item.id === product.id);
 
       if (exist) {
+        if (exist.quantity >= exist.stock) return prev;
+
         return prev.map((item) =>
           item.id === product.id
             ? {
@@ -45,22 +56,28 @@ function CartProvider({ children }) {
     });
   };
 
-  // ================= Increase =================
+  // =============================
+  // Increase Quantity
+  // =============================
 
   const increaseQuantity = (id) => {
     setCartItems((prev) =>
-      prev.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              quantity: item.quantity + 1,
-            }
-          : item,
-      ),
+      prev.map((item) => {
+        if (item.id !== id) return item;
+
+        if (item.quantity >= item.stock) return item;
+
+        return {
+          ...item,
+          quantity: item.quantity + 1,
+        };
+      }),
     );
   };
 
-  // ================= Decrease =================
+  // =============================
+  // Decrease Quantity
+  // =============================
 
   const decreaseQuantity = (id) => {
     setCartItems((prev) =>
@@ -77,23 +94,33 @@ function CartProvider({ children }) {
     );
   };
 
-  // ================= Remove =================
+  // =============================
+  // Remove Item
+  // =============================
 
   const removeFromCart = (id) => {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  // ================= Clear =================
+  // =============================
+  // Clear Cart
+  // =============================
 
   const clearCart = () => {
     setCartItems([]);
   };
 
-  // ================= Totals =================
+  // =============================
+  // Total Items
+  // =============================
 
   const totalItems = useMemo(() => {
     return cartItems.reduce((sum, item) => sum + item.quantity, 0);
   }, [cartItems]);
+
+  // =============================
+  // Subtotal
+  // =============================
 
   const subtotal = useMemo(() => {
     return cartItems.reduce(
@@ -102,6 +129,10 @@ function CartProvider({ children }) {
     );
   }, [cartItems]);
 
+  // =============================
+  // Discount
+  // =============================
+
   const totalDiscount = useMemo(() => {
     return cartItems.reduce(
       (sum, item) => sum + (item.basePrice - item.finalPrice) * item.quantity,
@@ -109,11 +140,19 @@ function CartProvider({ children }) {
     );
   }, [cartItems]);
 
+  // =============================
+  // Shipping
+  // =============================
+
   const shipping = useMemo(() => {
     if (subtotal === 0) return 0;
 
-    return subtotal >= 500000 ? 0 : 50000;
+    return subtotal >= FREE_SHIPPING_LIMIT ? 0 : SHIPPING_COST;
   }, [subtotal]);
+
+  // =============================
+  // Total
+  // =============================
 
   const totalPrice = useMemo(() => {
     return subtotal + shipping;
@@ -125,17 +164,18 @@ function CartProvider({ children }) {
         cartItems,
 
         addToCart,
+        increaseQuantity,
+        decreaseQuantity,
         removeFromCart,
         clearCart,
 
-        increaseQuantity,
-        decreaseQuantity,
-
-        totalItems,
         subtotal,
         totalDiscount,
         shipping,
         totalPrice,
+        totalItems,
+
+        FREE_SHIPPING_LIMIT,
       }}
     >
       {children}
