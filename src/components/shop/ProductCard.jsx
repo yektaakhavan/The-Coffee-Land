@@ -14,7 +14,7 @@ function ProductCard({ product }) {
         {/* Image Section */}
         <div className="relative overflow-hidden">
           <img
-            src={product.image}
+            src={product.images[0]}
             alt={product.name}
             className="w-full h-64 object-cover group-hover:scale-110 transition duration-700"
           />
@@ -89,9 +89,9 @@ function ProductCard({ product }) {
           {/* Product Details */}
           <Link
             to={`/product/${product.slug}`}
-            className="block w-full mt-4 py-3 rounded-2xl bg-gradient-to-r from-amber-800 to-orange-700 text-white font-medium text-center shadow-[0_8px_20px_rgba(120,53,15,0.25)] hover:shadow-[0_12px_25px_rgba(120,53,15,0.35)] hover:scale-[1.02] transition duration-300"
+            className="block w-full mt-4 py-3 rounded-2xl bg-gradient-to-r from-amber-800 to-orange-700 text-white font-medium text-center tracking-wide shadow-[0_8px_20px_rgba(120,53,15,0.25)] hover:shadow-[0_12px_25px_rgba(120,53,15,0.35)] hover:scale-[1.02] transition duration-300"
           >
-            مشاهده
+            مشاهده محصول
           </Link>
         </div>
       </div>

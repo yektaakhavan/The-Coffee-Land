@@ -11,144 +11,215 @@ const products = [
     name: "قهوه عربیکا اتیوپی",
     slug: "ethiopia-yirgacheffe",
     category: "single-origin",
-    roastLevel: "light",
+
+    images: [product01, product02, product03],
+
+    roastLevel: "Light",
+    origin: "اتیوپی",
+    process: "شسته",
+
     basePrice: 180000,
     discountPercent: 10,
     finalPrice: 162000,
+
     stock: 45,
-    image: product01,
+    inStock: true,
+
+    rating: 4.8,
+    reviewCount: 24,
+
     flavorNotes: ["بلوبری", "شکلات تلخ", "گل یاس"],
+
     acidity: "بالا",
     bitterness: "متوسط",
     body: "سبک تا متوسط",
-    origin: "اتیوپی، یرگاچف",
-    process: "شسته",
-    description: "قهوه‌ای خوش‌عطر با نت‌های میوه‌ای و گلی.",
-    rating: 2.8,
-    reviewCount: 24,
-    isActive: true,
-    isFeatured: true,
+
+    description: "قهوه‌ای خوش‌عطر با اسیدیته بالا و نت‌های میوه‌ای و گلی.",
+
     sizes: ["250g", "500g", "1kg"],
+
+    isFeatured: true,
+    isActive: true,
   },
+
   {
     id: 2,
     name: "قهوه کلمبیا سوپریمو",
     slug: "colombia-supremo",
     category: "single-origin",
-    roastLevel: "medium",
+
+    images: [product02, product03, product04],
+
+    roastLevel: "Medium",
+    origin: "کلمبیا",
+    process: "شسته",
+
     basePrice: 160000,
     discountPercent: 0,
     finalPrice: 160000,
+
     stock: 67,
-    image: product02,
+    inStock: true,
+
+    rating: 4.6,
+    reviewCount: 31,
+
     flavorNotes: ["کارامل", "آجیل", "سیب قرمز"],
+
     acidity: "متوسط",
     bitterness: "متوسط",
     body: "متوسط",
-    origin: "کلمبیا",
-    process: "شسته",
-    description: "متعادل، شیرین و مناسب برای دم‌آوری روزانه.",
-    rating: 4.6,
-    reviewCount: 31,
-    isActive: true,
-    isFeatured: true,
+
+    description: "طعمی متعادل با شیرینی کاراملی و رایحه دلچسب.",
+
     sizes: ["250g", "500g", "1kg"],
+
+    isFeatured: true,
+    isActive: true,
   },
+
   {
     id: 3,
     name: "قهوه برزیل سانتوس",
     slug: "brazil-santos",
     category: "single-origin",
-    roastLevel: "medium-dark",
+
+    images: [product03, product04, product05],
+
+    roastLevel: "Medium Dark",
+    origin: "برزیل",
+    process: "طبیعی",
+
     basePrice: 140000,
     discountPercent: 15,
     finalPrice: 119000,
+
     stock: 92,
-    image: product03,
+    inStock: true,
+
+    rating: 4.5,
+    reviewCount: 18,
+
     flavorNotes: ["شکلات", "فندق"],
+
     acidity: "پایین",
     bitterness: "متوسط",
     body: "سنگین",
-    origin: "برزیل",
-    process: "طبیعی",
-    description: "بادی سنگین و طعم کلاسیک شکلاتی.",
-    rating: 3.5,
-    reviewCount: 18,
-    isActive: true,
-    isFeatured: false,
+
+    description: "قهوه‌ای کلاسیک با بادی سنگین و طعم شکلاتی.",
+
     sizes: ["250g", "500g", "1kg"],
+
+    isFeatured: false,
+    isActive: true,
   },
+
   {
     id: 4,
     name: "قهوه کنیا AA",
     slug: "kenya-aa",
     category: "single-origin",
-    roastLevel: "light-medium",
+
+    images: [product04, product05, product06],
+
+    roastLevel: "Light Medium",
+    origin: "کنیا",
+    process: "شسته",
+
     basePrice: 200000,
     discountPercent: 0,
     finalPrice: 200000,
+
     stock: 0,
-    image: product04,
+    inStock: false,
+
+    rating: 4.9,
+    reviewCount: 12,
+
     flavorNotes: ["مرکبات", "انگور سیاه"],
+
     acidity: "بالا",
     bitterness: "پایین",
     body: "متوسط",
-    origin: "کنیا",
-    process: "شسته",
-    description: "اسیدیته روشن و طعمی پیچیده.",
-    rating: 3.5,
-    reviewCount: 12,
-    isActive: true,
-    isFeatured: true,
+
+    description: "اسیدیته روشن، رایحه مرکبات و طعمی پیچیده.",
+
     sizes: ["250g", "500g", "1kg"],
+
+    isFeatured: true,
+    isActive: true,
   },
+
   {
     id: 5,
     name: "اسپرسو بلند ایتالیایی",
     slug: "italian-espresso",
     category: "espresso-blend",
-    roastLevel: "dark",
+
+    images: [product05, product06, product01],
+
+    roastLevel: "Dark",
+    origin: "ترکیبی",
+    process: "Blend",
+
     basePrice: 150000,
     discountPercent: 5,
     finalPrice: 142500,
+
     stock: 55,
-    image: product05,
+    inStock: true,
+
+    rating: 4.4,
+    reviewCount: 45,
+
     flavorNotes: ["شکلات تلخ", "ادویه"],
+
     acidity: "پایین",
     bitterness: "بالا",
     body: "سنگین",
-    origin: "ترکیبی",
-    process: "متنوع",
-    description: "اسپرسو کلاسیک با کرمای غلیظ.",
-    rating: 4.4,
-    reviewCount: 45,
-    isActive: true,
-    isFeatured: true,
+
+    description: "اسپرسو ایتالیایی با کرمای غلیظ و طعمی کلاسیک.",
+
     sizes: ["250g", "500g", "1kg"],
+
+    isFeatured: true,
+    isActive: true,
   },
+
   {
     id: 6,
     name: "قهوه ترک اصیل",
     slug: "turkish-coffee",
     category: "turkish",
-    roastLevel: "dark",
+
+    images: [product06, product01, product02],
+
+    roastLevel: "Dark",
+    origin: "ترکیبی",
+    process: "Blend",
+
     basePrice: 130000,
     discountPercent: 0,
     finalPrice: 130000,
+
     stock: 40,
-    image: product06,
+    inStock: true,
+
+    rating: 4.7,
+    reviewCount: 29,
+
     flavorNotes: ["هل", "ادویه شیرین"],
+
     acidity: "پایین",
     bitterness: "متوسط",
     body: "بسیار سنگین",
-    origin: "ترکیبی",
-    process: "متنوع",
-    description: "قهوه ترک با عطر هل.",
-    rating: 5,
-    reviewCount: 29,
-    isActive: true,
-    isFeatured: false,
+
+    description: "قهوه ترک سنتی با رایحه هل و آسیاب بسیار ریز.",
+
     sizes: ["250g", "500g", "1kg"],
+
+    isFeatured: false,
+    isActive: true,
   },
 ];
 

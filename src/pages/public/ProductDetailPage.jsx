@@ -1,62 +1,210 @@
-// import { useParams } from "react-router-dom";
-// import products from "../../data/products";
+import React, { useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
-// import ProductGallery from "../../components/shop/ProductGallery";
-// import ProductInfo from "../../components/shop/ProductInfo";
-// import ProductFeatures from "../../components/shop/ProductFeatures";
-// import AddToCart from "../../components/shop/AddToCart";
-
-// function ProductDetailPage() {
-//   const { slug } = useParams();
-
-//   const product = products.find((item) => item.slug === slug);
-
-//   if (!product) {
-//     return <div className="text-center py-20">محصول پیدا نشد</div>;
-//   }
-
-//   return (
-//     <section className="max-w-7xl mx-auto px-5 py-10">
-//       <div className="grid lg:grid-cols-2 gap-12">
-//         <ProductGallery product={product} />
-
-//         <div>
-//           <ProductInfo product={product} />
-
-//           <ProductFeatures product={product} />
-
-//           <AddToCart product={product} />
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }
-
-// export default ProductDetailPage;
-
-import { useParams } from "react-router-dom";
 import products from "../../data/products";
-import ProductInfo from "../../components/shop/ProductInfo";
+
+import StarRating from "../../components/shop/StarRating";
+import Badge from "../../components/shop/Badge";
+
+import formatPrice from "../../utils/formatPrice";
 
 function ProductDetailPage() {
   const { slug } = useParams();
 
-  const product = products.find((p) => p.slug === slug);
+  const product = products.find((item) => item.slug === slug);
 
   if (!product) {
-    return <div className="text-center py-20">محصول پیدا نشد.</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <h2 className="text-3xl font-bold">محصول پیدا نشد 😥</h2>
+      </div>
+    );
   }
 
-  return (
-    <div className="max-w-6xl mx-auto py-16 px-6">
-      <div className="grid md:grid-cols-2 gap-12">
-        <img
-          src={product.image}
-          alt={product.name}
-          className="rounded-3xl shadow-lg"
-        />
+  const [selectedImage, setSelectedImage] = useState(product.images[0]);
 
-        <ProductInfo product={product} />
+  const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
+
+  const [quantity, setQuantity] = useState(1);
+
+  const totalPrice = product.finalPrice * quantity;
+
+  return (
+    <div className="bg-stone-100 min-h-screen py-10 px-5">
+      <div className="max-w-7xl mx-auto">
+        {/* Breadcrumb */}
+
+        <div className="text-sm text-gray-500 mb-8">
+          <Link to="/">خانه</Link>
+
+          <span className="mx-2">/</span>
+
+          <Link to="/shop">فروشگاه</Link>
+
+          <span className="mx-2">/</span>
+
+          <span>{product.name}</span>
+        </div>
+
+        {/* Main */}
+
+        <div className="grid lg:grid-cols-2 gap-14">
+          {/* Images */}
+
+          <div>
+            {/* Main Image */}
+
+            <div className="rounded-3xl overflow-hidden shadow-lg bg-white">
+              <img
+                src={selectedImage}
+                alt={product.name}
+                className="w-full h-[550px] object-cover"
+              />
+            </div>
+
+            {/* Gallery */}
+
+            <div className="flex gap-4 mt-5">
+              {product.images.map((image, index) => (
+                <button
+                  key={index}
+                  onClick={() => setSelectedImage(image)}
+                  className={`rounded-2xl overflow-hidden border-2 transition
+
+                  ${
+                    selectedImage === image
+                      ? "border-amber-700"
+                      : "border-transparent"
+                  }
+
+                  `}
+                >
+                  <img src={image} alt="" className="w-24 h-24 object-cover" />
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Information */}
+
+          <div>
+            <h1 className="text-4xl font-extrabold text-stone-800">
+              {product.name}
+            </h1>
+
+            <div className="mt-4">
+              <StarRating rating={product.rating} count={product.reviewCount} />
+            </div>
+
+            <p className="mt-6 leading-9 text-gray-600">
+              {product.description}
+            </p>
+
+            {/* Flavor */}
+
+            <div className="flex flex-wrap gap-2 mt-6">
+              {product.flavorNotes.map((note) => (
+                <Badge key={note} type="flavor">
+                  {note}
+                </Badge>
+              ))}
+            </div>
+
+            {/* Details */}
+
+            <div className="grid grid-cols-2 gap-y-5 mt-10 bg-white rounded-3xl p-6 shadow">
+              <span className="font-semibold">کشور</span>
+
+              <span>{product.origin}</span>
+
+              <span className="font-semibold">رست</span>
+
+              <span>{product.roastLevel}</span>
+
+              <span className="font-semibold">فرآوری</span>
+
+              <span>{product.process}</span>
+
+              <span className="font-semibold">اسیدیته</span>
+
+              <span>{product.acidity}</span>
+
+              <span className="font-semibold">تلخی</span>
+
+              <span>{product.bitterness}</span>
+
+              <span className="font-semibold">بادی</span>
+
+              <span>{product.body}</span>
+            </div>
+
+            {/* Sizes */}
+
+            <div className="mt-10">
+              <h3 className="font-bold mb-4">انتخاب وزن</h3>
+
+              <div className="flex gap-3">
+                {product.sizes.map((size) => (
+                  <button
+                    key={size}
+                    onClick={() => setSelectedSize(size)}
+                    className={`px-5 py-3 rounded-xl transition
+
+                    ${
+                      selectedSize === size
+                        ? "bg-amber-800 text-white"
+                        : "bg-gray-200 hover:bg-gray-300"
+                    }
+
+                    `}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Quantity */}
+
+            <div className="mt-10">
+              <h3 className="font-bold mb-4">تعداد</h3>
+
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
+                  className="w-10 h-10 rounded-lg bg-gray-200"
+                >
+                  -
+                </button>
+
+                <span className="font-bold text-xl">{quantity}</span>
+
+                <button
+                  onClick={() => setQuantity((prev) => prev + 1)}
+                  className="w-10 h-10 rounded-lg bg-gray-200"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            {/* Price */}
+
+            <div className="mt-10">
+              <p className="text-gray-500">مبلغ قابل پرداخت</p>
+
+              <h2 className="text-4xl font-black text-amber-900 mt-2">
+                {formatPrice(totalPrice)}
+              </h2>
+            </div>
+
+            {/* Add Cart */}
+
+            <button className="w-full mt-8 bg-amber-800 hover:bg-amber-700 transition text-white py-4 rounded-2xl text-lg font-bold">
+              افزودن به سبد خرید
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
