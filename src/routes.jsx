@@ -16,7 +16,6 @@ import ArticlesPage from "./pages/public/ArticlesPage";
 import SignInPage from "./pages/auth/SignInPage";
 import SignUpPage from "./pages/auth/SignUpPage";
 
-
 //ADMIN PAGE
 import AdminLayout from "./components/layout/AdminLayout";
 import DashboardPage from "./pages/admin/DashboardPage";
@@ -118,7 +117,7 @@ const routes = [
       { path: "order-detail/:id", element: <OrderDetailCustomerPage /> },
       { path: "orders", element: <OrdersPage /> },
       { path: "products", element: <ProductsPage /> },
-      { path: "product-edit/:id", element: <ProductEditPage /> },
+      { path: "products/edit/:id", element: <ProductEditPage /> },
       { path: "products/add", element: <AddProductPage /> },
       { path: "reviews", element: <ReviewPage /> },
       { path: "settings", element: <SettingPage /> },

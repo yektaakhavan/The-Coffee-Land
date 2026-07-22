@@ -7,6 +7,7 @@ import AuthProvider from "./context/AuthContext.jsx";
 import CartProvider from "./context/CartContext.jsx";
 import OrderProvider from "./context/OrderContext.jsx";
 import { ProductProvider } from "./context/ProductContext.jsx";
+import { CategoryProvider } from "./context/CategoryContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -14,7 +15,9 @@ createRoot(document.getElementById("root")).render(
       <CartProvider>
         <OrderProvider>
           <ProductProvider>
-            <App />
+            <CategoryProvider>
+              <App />
+            </CategoryProvider>
           </ProductProvider>
         </OrderProvider>
       </CartProvider>

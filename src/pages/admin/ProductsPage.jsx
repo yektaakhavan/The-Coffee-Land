@@ -13,10 +13,15 @@ import calculateFinalPrice from "../../utils/calculateFinalPrice.js";
 import TableActions from "../../components/admin/TableActions";
 import { useProducts } from "../../context/ProductContext.jsx";
 
+import ConfirmModal from "../../components/ui/ConfirmModal";
+
 function ProductsPage() {
   const { products } = useProducts();
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const { deleteProduct } = useProducts();
+
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const ITEMS_PER_PAGE = 6;
 
@@ -104,9 +109,7 @@ function ProductsPage() {
                 <TableActions
                   viewLink={`/product/${product.slug}`}
                   editLink={`/admin/products/edit/${product.id}`}
-                  onDelete={() => {
-                    console.log("Delete", product.id);
-                  }}
+                  onDelete={() => setSelectedProduct(product)}
                 />
               );
 
@@ -120,6 +123,19 @@ function ProductsPage() {
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={setCurrentPage}
+      />
+
+      <ConfirmModal
+        isOpen={!!selectedProduct}
+        title="حذف محصول"
+        message={`آیا از حذف "${selectedProduct?.name}" مطمئن هستید؟`}
+        confirmText="حذف"
+        cancelText="انصراف"
+        onCancel={() => setSelectedProduct(null)}
+        onConfirm={() => {
+          deleteProduct(selectedProduct.id);
+          setSelectedProduct(null);
+        }}
       />
     </section>
   );
