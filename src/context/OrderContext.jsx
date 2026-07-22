@@ -5,16 +5,21 @@ export const OrderContext = createContext();
 function OrderProvider({ children }) {
   const [orders, setOrders] = useState(() => {
     const savedOrders = localStorage.getItem("orders");
+
     return savedOrders ? JSON.parse(savedOrders) : [];
   });
+
+  // Save Orders
 
   useEffect(() => {
     localStorage.setItem("orders", JSON.stringify(orders));
   }, [orders]);
 
+  // Create Order
+
   const createOrder = (orderData) => {
     const newOrder = {
-      id: crypto.randomUUID(),
+      id: crypto.randomUUID ? crypto.randomUUID() : Date.now(),
 
       orderNumber: "#" + Math.floor(100000 + Math.random() * 900000),
 
@@ -30,11 +35,28 @@ function OrderProvider({ children }) {
     return newOrder;
   };
 
+  // Get Order By Id
+
+  const getOrderById = (id) => {
+    return orders.find((order) => order.id === id);
+  };
+
+  // Clear Orders (for testing)
+
+  const clearOrders = () => {
+    setOrders([]);
+  };
+
   return (
     <OrderContext.Provider
       value={{
         orders,
+
         createOrder,
+
+        getOrderById,
+
+        clearOrders,
       }}
     >
       {children}

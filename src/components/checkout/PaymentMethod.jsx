@@ -8,12 +8,14 @@ function PaymentMethod({ selected, setSelected }) {
       description: "پرداخت از طریق درگاه بانکی",
       icon: <FaCreditCard />,
     },
+
     {
       id: "cash",
       title: "پرداخت در محل",
       description: "ویژه شهرهای منتخب",
       icon: <FaMoneyBillWave />,
     },
+
     {
       id: "card",
       title: "کارت به کارت",
@@ -23,38 +25,88 @@ function PaymentMethod({ selected, setSelected }) {
   ];
 
   return (
-    <div className="bg-white rounded-3xl shadow-lg p-8 mt-8">
-      <h2 className="text-2xl font-bold mb-6">روش پرداخت</h2>
+    <div
+      className="
+      bg-white
+      rounded-3xl
+      shadow-lg
+      p-8
+      mt-8
+    "
+    >
+      <h2
+        className="
+        text-2xl
+        font-bold
+        mb-6
+      "
+      >
+        روش پرداخت
+      </h2>
 
       <div className="space-y-4">
         {methods.map((method) => (
           <label
             key={method.id}
             className={`
-              flex justify-between items-center
-              border-2 rounded-2xl
-              p-5 cursor-pointer transition
+                flex
+                justify-between
+                items-center
+                border-2
+                rounded-2xl
+                p-5
+                cursor-pointer
+                transition
 
-              ${
-                selected === method.id
-                  ? "border-green-600 bg-green-50"
-                  : "border-gray-200 hover:border-green-300"
-              }
-            `}
+                ${
+                  selected === method.id
+                    ? "border-green-600 bg-green-50"
+                    : "border-gray-200 hover:border-green-300"
+                }
+
+              `}
           >
-            <div className="flex items-center gap-4">
+            <div
+              className="
+                flex
+                items-center
+                gap-4
+              "
+            >
               <input
                 type="radio"
+                name="payment"
+                value={method.id}
                 checked={selected === method.id}
                 onChange={() => setSelected(method.id)}
               />
 
-              <div className="text-2xl text-green-700">{method.icon}</div>
+              <div
+                className="
+                  text-2xl
+                  text-green-700
+                "
+              >
+                {method.icon}
+              </div>
 
               <div>
-                <h3 className="font-bold">{method.title}</h3>
+                <h3
+                  className="
+                    font-bold
+                  "
+                >
+                  {method.title}
+                </h3>
 
-                <p className="text-sm text-gray-500">{method.description}</p>
+                <p
+                  className="
+                    text-sm
+                    text-gray-500
+                  "
+                >
+                  {method.description}
+                </p>
               </div>
             </div>
           </label>
