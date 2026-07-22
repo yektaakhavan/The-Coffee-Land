@@ -8,9 +8,16 @@ import product06 from "../assets/images/product/06.jpg";
 const products = [
   {
     id: 1,
+    sku: "CF-0001",
+
     name: "قهوه عربیکا اتیوپی",
     slug: "ethiopia-yirgacheffe",
-    category: "single-origin",
+
+    category: {
+      id: 1,
+      title: "تک خاستگاه",
+      slug: "single-origin",
+    },
 
     images: [product01, product02, product03],
 
@@ -20,10 +27,14 @@ const products = [
 
     basePrice: 180000,
     discountPercent: 10,
-    finalPrice: 162000,
 
-    stock: 45,
-    inStock: true,
+    inventory: {
+      stock: 45,
+      reserved: 2,
+      sold: 138,
+    },
+
+    status: "active",
 
     rating: 4.8,
     reviewCount: 24,
@@ -39,14 +50,23 @@ const products = [
     sizes: ["250g", "500g", "1kg"],
 
     isFeatured: true,
-    isActive: true,
+
+    createdAt: "2026-01-15",
+    updatedAt: "2026-07-20",
   },
 
   {
     id: 2,
+    sku: "CF-0002",
+
     name: "قهوه کلمبیا سوپریمو",
     slug: "colombia-supremo",
-    category: "single-origin",
+
+    category: {
+      id: 1,
+      title: "تک خاستگاه",
+      slug: "single-origin",
+    },
 
     images: [product02, product03, product04],
 
@@ -56,10 +76,14 @@ const products = [
 
     basePrice: 160000,
     discountPercent: 0,
-    finalPrice: 160000,
 
-    stock: 67,
-    inStock: true,
+    inventory: {
+      stock: 67,
+      reserved: 5,
+      sold: 201,
+    },
+
+    status: "active",
 
     rating: 4.6,
     reviewCount: 31,
@@ -75,14 +99,23 @@ const products = [
     sizes: ["250g", "500g", "1kg"],
 
     isFeatured: true,
-    isActive: true,
+
+    createdAt: "2026-01-18",
+    updatedAt: "2026-07-20",
   },
 
   {
     id: 3,
+    sku: "CF-0003",
+
     name: "قهوه برزیل سانتوس",
     slug: "brazil-santos",
-    category: "single-origin",
+
+    category: {
+      id: 1,
+      title: "تک خاستگاه",
+      slug: "single-origin",
+    },
 
     images: [product03, product04, product05],
 
@@ -92,10 +125,14 @@ const products = [
 
     basePrice: 140000,
     discountPercent: 15,
-    finalPrice: 119000,
 
-    stock: 92,
-    inStock: true,
+    inventory: {
+      stock: 92,
+      reserved: 6,
+      sold: 320,
+    },
+
+    status: "active",
 
     rating: 4.5,
     reviewCount: 18,
@@ -111,14 +148,23 @@ const products = [
     sizes: ["250g", "500g", "1kg"],
 
     isFeatured: false,
-    isActive: true,
+
+    createdAt: "2026-02-02",
+    updatedAt: "2026-07-20",
   },
 
   {
     id: 4,
+    sku: "CF-0004",
+
     name: "قهوه کنیا AA",
     slug: "kenya-aa",
-    category: "single-origin",
+
+    category: {
+      id: 1,
+      title: "تک خاستگاه",
+      slug: "single-origin",
+    },
 
     images: [product04, product05, product06],
 
@@ -128,10 +174,14 @@ const products = [
 
     basePrice: 200000,
     discountPercent: 0,
-    finalPrice: 200000,
 
-    stock: 0,
-    inStock: false,
+    inventory: {
+      stock: 0,
+      reserved: 0,
+      sold: 124,
+    },
+
+    status: "out-of-stock",
 
     rating: 4.9,
     reviewCount: 12,
@@ -147,14 +197,23 @@ const products = [
     sizes: ["250g", "500g", "1kg"],
 
     isFeatured: true,
-    isActive: true,
+
+    createdAt: "2026-02-15",
+    updatedAt: "2026-07-20",
   },
 
   {
     id: 5,
+    sku: "CF-0005",
+
     name: "اسپرسو بلند ایتالیایی",
     slug: "italian-espresso",
-    category: "espresso-blend",
+
+    category: {
+      id: 2,
+      title: "بلند اسپرسو",
+      slug: "espresso-blend",
+    },
 
     images: [product05, product06, product01],
 
@@ -164,10 +223,14 @@ const products = [
 
     basePrice: 150000,
     discountPercent: 5,
-    finalPrice: 142500,
 
-    stock: 55,
-    inStock: true,
+    inventory: {
+      stock: 55,
+      reserved: 4,
+      sold: 251,
+    },
+
+    status: "active",
 
     rating: 4.4,
     reviewCount: 45,
@@ -183,14 +246,23 @@ const products = [
     sizes: ["250g", "500g", "1kg"],
 
     isFeatured: true,
-    isActive: true,
+
+    createdAt: "2026-03-01",
+    updatedAt: "2026-07-20",
   },
 
   {
     id: 6,
+    sku: "CF-0006",
+
     name: "قهوه ترک اصیل",
     slug: "turkish-coffee",
-    category: "turkish",
+
+    category: {
+      id: 3,
+      title: "قهوه ترک",
+      slug: "turkish",
+    },
 
     images: [product06, product01, product02],
 
@@ -200,10 +272,14 @@ const products = [
 
     basePrice: 130000,
     discountPercent: 0,
-    finalPrice: 130000,
 
-    stock: 40,
-    inStock: true,
+    inventory: {
+      stock: 40,
+      reserved: 3,
+      sold: 172,
+    },
+
+    status: "active",
 
     rating: 4.7,
     reviewCount: 29,
@@ -219,7 +295,9 @@ const products = [
     sizes: ["250g", "500g", "1kg"],
 
     isFeatured: false,
-    isActive: true,
+
+    createdAt: "2026-03-10",
+    updatedAt: "2026-07-20",
   },
 ];
 

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
-import formatPrice from "../../utils/formatPrice";
+import formatPrice from "../../utils/formatPrice.js";
 
 function CheckoutSummary() {
   const { subtotal, shipping, totalDiscount, totalPrice } =

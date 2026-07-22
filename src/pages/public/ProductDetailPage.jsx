@@ -1,21 +1,30 @@
 import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
-import products from "../../data/products";
+import { useProducts } from "../../context/ProductContext";
 
 import StarRating from "../../components/shop/StarRating";
 import Badge from "../../components/shop/Badge";
 
-import formatPrice from "../../utils/formatPrice";
+import formatPrice from "../../utils/formatPrice.js";
 
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
+import calculateFinalPrice from "../../utils/calculateFinalPrice.js";
 
 function ProductDetailPage() {
+  const { products } = useProducts();
   const { slug } = useParams();
   const { addToCart } = useContext(CartContext);
 
-  const product = products.find((item) => item.slug === slug);
+  console.log("slug:", slug);
+  console.log("products:", products);
+
+  const { getProductBySlug } = useProducts();
+
+  const product = getProductBySlug(slug);
+
+  console.log("product:", product);
 
   if (!product) {
     return (
@@ -25,13 +34,14 @@ function ProductDetailPage() {
     );
   }
 
-  const [selectedImage, setSelectedImage] = useState(product.images[0]);
-
-  const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
-
+  // const [selectedImage, setSelectedImage] = useState(product.images[0]);
+  const [selectedImage, setSelectedImage] = useState(product.images?.[0] || "");
+  // const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
+  const [selectedSize, setSelectedSize] = useState(product.sizes?.[0] || "");
   const [quantity, setQuantity] = useState(1);
 
-  const totalPrice = product.finalPrice * quantity;
+  const totalPrice =
+    calculateFinalPrice(product.basePrice, product.discountPercent) * quantity;
 
   return (
     <div className="bg-stone-100 min-h-screen py-10 px-5">

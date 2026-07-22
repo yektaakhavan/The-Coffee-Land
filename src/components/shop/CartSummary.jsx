@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import formatPrice from "../../utils/formatPrice";
+import formatPrice from "../../utils/formatPrice.js";
 
 function CartSummary({
   subtotal,

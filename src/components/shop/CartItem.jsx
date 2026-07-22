@@ -1,6 +1,6 @@
 import { FaMinus, FaPlus, FaTrash, FaCheckCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import formatPrice from "../../utils/formatPrice";
+import formatPrice from "../../utils/formatPrice.js";
 
 function CartItem({
   item,

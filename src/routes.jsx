@@ -119,7 +119,7 @@ const routes = [
       { path: "orders", element: <OrdersPage /> },
       { path: "products", element: <ProductsPage /> },
       { path: "product-edit/:id", element: <ProductEditPage /> },
-      { path: "add-product", element: <AddProductPage /> },
+      { path: "products/add", element: <AddProductPage /> },
       { path: "reviews", element: <ReviewPage /> },
       { path: "settings", element: <SettingPage /> },
     ],

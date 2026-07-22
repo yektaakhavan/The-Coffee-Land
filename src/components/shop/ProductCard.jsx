@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import StarRating from "../shop/StarRating";
 import Badge from "./Badge";
-import formatPrice from "../../utils/formatPrice";
+import formatPrice from "../../utils/formatPrice.js";
+import calculateFinalPrice from "../../utils/calculateFinalPrice.js"
 
 function ProductCard({ product }) {
   return (
@@ -30,7 +31,7 @@ function ProductCard({ product }) {
           )}
 
           {/* Available Product */}
-          {product.stock <= 0 && (
+          {product.inventory.stock <= 0 && (
             <div className="absolute top-0 left-0 z-20">
               <Badge type="stock">ناموجود</Badge>
             </div>
@@ -81,7 +82,10 @@ function ProductCard({ product }) {
               {/* discounted price */}
               {product.discountPercent > 0 && (
                 <p className="text-amber-900 text-lg font-bold">
-                  <p>{formatPrice(product.finalPrice)}</p>
+                  <p>
+                    formatPrice( calculateFinalPrice( product.basePrice,
+                    product.discountPercent ) )
+                  </p>
                 </p>
               )}
             </div>

@@ -1,6 +1,7 @@
 import Badge from "./Badge";
 import StarRating from "./StarRating";
-import formatPrice from "../../utils/formatPrice";
+import formatPrice from "../../utils/formatPrice.js";
+import calculateFinalPrice from "../../utils/calculateFinalPrice.js"
 
 function ProductInfo({ product }) {
   return (
@@ -33,7 +34,10 @@ function ProductInfo({ product }) {
 
       <div className="border-t pt-6">
         <p className="text-3xl font-bold text-amber-900">
-          {formatPrice(product.finalPrice)}
+          {formatPrice(calculateFinalPrice(
+  product.basePrice,
+  product.discountPercent
+))}
         </p>
       </div>
     </div>
