@@ -1,66 +1,95 @@
-import React, { useRef } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
-import ProductCard from "../../data/ProductCard";
+import { useRef } from "react";
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 
-// استایل Swiper
-import "swiper/css";
-import "swiper/css/navigation";
+import ProductCard from "./ProductCard";
 
-const ProductSlider = ({ products, title }) => {
+function ProductSlider({ products = [], title }) {
+  const scrollerRef = useRef(null);
+
+  const scrollByAmount = (direction) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+
+    const amount = el.clientWidth * 0.8 * direction;
+    el.scrollBy({ left: amount, behavior: "smooth" });
+  };
+
+  if (!products.length) return null;
+
   return (
     <div className="my-12">
-      {/* عنوان */}
+      {/* Title */}
       <div className="flex items-center justify-center gap-4 mb-8">
         <div className="flex-1 h-px bg-gray-200"></div>
-        <span className="text-2xl font-bold text-gray-800 px-4 border-x-2 border-amber-500">
+
+        <span className="text-2xl font-bold text-gray-800 px-4 border-x-2 border-amber-500 whitespace-nowrap">
           {title}
         </span>
+
         <div className="flex-1 h-px bg-gray-200"></div>
       </div>
 
-      {/* اسلایدر */}
-      <Swiper
-        modules={[Navigation]}
-        navigation
-        spaceBetween={20}
-        slidesPerView={1}
-        breakpoints={{
-          576: { slidesPerView: 2 },
-          768: { slidesPerView: 3 },
-          1024: { slidesPerView: 4 },
-          1280: { slidesPerView: 5 },
-        }}
-        className="!px-10"
-      >
-        {products.map((product) => (
-          <SwiperSlide key={product.id}>
-            <ProductCard product={product} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {/* Slider */}
+      <div className="relative group/slider">
+        <button
+          type="button"
+          onClick={() => scrollByAmount(1)}
+          aria-label="محصولات بعدی"
+          className="
+            hidden sm:flex
+            absolute right-0 top-1/2 -translate-y-1/2 z-10
+            w-11 h-11 items-center justify-center
+            rounded-full bg-white text-amber-800 shadow-lg
+            hover:bg-amber-800 hover:text-white
+            transition
+            opacity-0 group-hover/slider:opacity-100
+          "
+        >
+          <HiChevronRight className="text-xl" />
+        </button>
 
-      {/* استایل دکمه‌های ناوبری */}
-      <style jsx>{`
-        .swiper-button-next,
-        .swiper-button-prev {
-          color: #b45309;
-          width: 30px;
-          height: 30px;
-        }
-        .swiper-button-next:after,
-        .swiper-button-prev:after {
-          font-size: 20px;
-        }
-        @media (max-width: 768px) {
-          .swiper-button-next,
-          .swiper-button-prev {
-            display: flex !important;
-          }
-        }
-      `}</style>
+        <button
+          type="button"
+          onClick={() => scrollByAmount(-1)}
+          aria-label="محصولات قبلی"
+          className="
+            hidden sm:flex
+            absolute left-0 top-1/2 -translate-y-1/2 z-10
+            w-11 h-11 items-center justify-center
+            rounded-full bg-white text-amber-800 shadow-lg
+            hover:bg-amber-800 hover:text-white
+            transition
+            opacity-0 group-hover/slider:opacity-100
+          "
+        >
+          <HiChevronLeft className="text-xl" />
+        </button>
+
+        <div
+          ref={scrollerRef}
+          className="
+            flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory
+            px-1 pb-4
+            [&::-webkit-scrollbar]:h-1.5
+            [&::-webkit-scrollbar-thumb]:bg-amber-200
+            [&::-webkit-scrollbar-thumb]:rounded-full
+          "
+        >
+          {products.map((product) => (
+            <div
+              key={product.id}
+              className="
+                snap-start shrink-0
+                w-[80%] sm:w-[48%] md:w-[32%] lg:w-[24%] xl:w-[19%]
+              "
+            >
+              <ProductCard product={product} />
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
-};
+}
 
 export default ProductSlider;

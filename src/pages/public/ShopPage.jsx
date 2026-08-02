@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import ProductCard from "../../components/shop/ProductCard";
 
@@ -7,9 +8,23 @@ import { useProducts } from "../../context/ProductContext";
 function ShopPage() {
   const { products } = useProducts();
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [search, setSearch] = useState("");
 
-  const [category, setCategory] = useState("all");
+  const [category, setCategory] = useState(
+    searchParams.get("category") || "all",
+  );
+
+  const handleCategoryChange = (value) => {
+    setCategory(value);
+
+    if (value === "all") {
+      setSearchParams({});
+    } else {
+      setSearchParams({ category: value });
+    }
+  };
 
   const categories = useMemo(() => {
     const result = products.map((product) => product.category);
@@ -91,7 +106,7 @@ function ShopPage() {
 
           <select
             value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            onChange={(e) => handleCategoryChange(e.target.value)}
             className="
               border
               rounded-xl
