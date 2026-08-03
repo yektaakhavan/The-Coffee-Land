@@ -80,7 +80,7 @@ function ProductSlider({ products = [], title }) {
               key={product.id}
               className="
                 snap-start shrink-0
-                w-[80%] sm:w-[48%] md:w-[32%] lg:w-[24%] xl:w-[19%]
+                w-[85%] xs:w-[75%] sm:w-[48%] md:w-[32%] lg:w-[24%] xl:w-[19%]
               "
             >
               <ProductCard product={product} />

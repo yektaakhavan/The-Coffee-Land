@@ -3,6 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import { useProducts } from "../../../context/ProductContext";
+import { useCategories } from "../../../context/CategoryContext";
 
 import ProductBasicInfo from "./ProductBasicInfo";
 import ProductPricing from "./ProductPricing";
@@ -14,6 +15,7 @@ function ProductForm({ mode = "create", defaultValues = {} }) {
   const navigate = useNavigate();
 
   const { addProduct, updateProduct } = useProducts();
+  const { categories } = useCategories();
 
   const methods = useForm({
     defaultValues: {
@@ -52,6 +54,10 @@ function ProductForm({ mode = "create", defaultValues = {} }) {
   }, [defaultValues, methods]);
 
   function handleFormSubmit(data) {
+    const selectedCategory = categories.find(
+      (category) => category.slug === data.category,
+    );
+
     const product = {
       id: mode === "edit" ? defaultValues.id : Date.now(),
 
@@ -62,8 +68,8 @@ function ProductForm({ mode = "create", defaultValues = {} }) {
       slug: data.name.trim().toLowerCase().replace(/\s+/g, "-"),
 
       category: {
-        id: defaultValues.category?.id || 1,
-        title: data.category,
+        id: selectedCategory?.id ?? Date.now(),
+        title: selectedCategory?.title ?? data.category,
         slug: data.category,
       },
 

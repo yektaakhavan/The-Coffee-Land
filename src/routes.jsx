@@ -11,6 +11,7 @@ import CheckOutPage from "./pages/public/CheckOutPage";
 import PaymentPage from "./pages/public/PaymentPage";
 import OrderSuccessPage from "./pages/public/OrderSuccessPage";
 import ArticlesPage from "./pages/public/ArticlesPage";
+import ArticleDetailPage from "./pages/public/ArticleDetailPage";
 
 //AUTH PAGE
 import SignInPage from "./pages/auth/SignInPage";
@@ -47,7 +48,7 @@ const routes = [
       { path: "product/:slug", element: <ProductDetailPage /> },
       { path: "blog", element: <BlogPage /> },
       { path: "articles", element: <ArticlesPage /> },
-      { path: "articles/:slug", element: <ArticlePostPage /> },
+      { path: "articles/:slug", element: <ArticleDetailPage /> },
       { path: "about", element: <AboutPage /> },
       { path: "contact", element: <ContactPage /> },
       {

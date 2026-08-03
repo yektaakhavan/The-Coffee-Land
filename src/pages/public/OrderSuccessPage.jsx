@@ -24,7 +24,7 @@ function OrderSuccessPage() {
   const { order } = state;
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-stone-100 via-amber-50 to-orange-100 py-16 px-4">
+    <section className="min-h-screen bg-gradient-to-br from-stone-100 via-amber-50 to-amber-100 py-16 px-4">
       <div className="max-w-3xl mx-auto">
         <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
           {/* Header */}

@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import ProductForm from "../../components/admin/product/ProductForm";
 
@@ -7,9 +7,7 @@ import { useProducts } from "../../context/ProductContext";
 function ProductEditPage() {
   const { id } = useParams();
 
-  const navigate = useNavigate();
-
-  const { getProductById, updateProduct } = useProducts();
+  const { getProductById } = useProducts();
 
   const product = getProductById(id);
 
@@ -21,40 +19,15 @@ function ProductEditPage() {
     );
   }
 
-  const handleSubmit = (data) => {
-    updateProduct(product.id, {
-      ...product,
-
-      ...data,
-
-      category: {
-        ...product.category,
-        title: data.category,
-      },
-
-      basePrice: Number(data.basePrice),
-
-      discountPercent: Number(data.discountPercent),
-
-      inventory: {
-        stock: Number(data.stock),
-        reserved: Number(data.reserved),
-        sold: Number(data.sold),
-      },
-
-      updatedAt: new Date().toISOString(),
-    });
-
-    navigate("/admin/products");
-  };
-
   return (
     <section className="space-y-8">
       <ProductForm
+        mode="edit"
         defaultValues={{
           ...product,
 
-          category: product.category.title,
+          // FormSelect matches on slug, not the display title
+          category: product.category.slug,
 
           stock: product.inventory.stock,
 
@@ -62,8 +35,6 @@ function ProductEditPage() {
 
           sold: product.inventory.sold,
         }}
-        submitText="ذخیره تغییرات"
-        onSubmit={handleSubmit}
       />
     </section>
   );

@@ -22,7 +22,7 @@ function ArticlesPage() {
   );
 
   return (
-    <div className="bg-[#FFFBEB] min-h-screen">
+    <div className="bg-[#F5EFE2] min-h-screen">
       <section className="max-w-4xl mx-auto px-6 py-16">
         <div className="text-center mb-12">
           <span className="inline-block bg-amber-50 text-amber-700 text-sm px-4 py-1.5 rounded-full mb-6 border border-amber-100">

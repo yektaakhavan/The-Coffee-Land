@@ -5,9 +5,15 @@ import FormTextarea from "../forms/FormTextarea";
 import FormSection from "../ui/FormSection";
 import FormGrid from "../ui/FormGrid";
 
-import productCategories from "../../../constants/productCategories";
+import { useCategories } from "../../../context/CategoryContext";
 
 function ProductBasicInfo() {
+  const { categories } = useCategories();
+
+  const activeCategories = categories.filter(
+    (category) => category.status === "active",
+  );
+
   return (
     <FormSection title="اطلاعات اصلی محصول">
       <p className="text-sm text-gray-500 mb-6">
@@ -36,7 +42,7 @@ function ProductBasicInfo() {
         <FormSelect
           name="category"
           label="دسته بندی"
-          options={productCategories}
+          options={activeCategories}
           rules={{
             required: "انتخاب دسته بندی الزامی است",
           }}

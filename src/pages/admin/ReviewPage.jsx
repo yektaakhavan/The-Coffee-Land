@@ -15,8 +15,8 @@ function ReviewPage() {
 
   const filteredReviews = reviews.filter((review) => {
     return (
-      review.user.toLowerCase().includes(search.toLowerCase()) ||
-      review.product.toLowerCase().includes(search.toLowerCase())
+      (review.user || "").toLowerCase().includes(search.toLowerCase()) ||
+      (review.product || "").toLowerCase().includes(search.toLowerCase())
     );
   });
 

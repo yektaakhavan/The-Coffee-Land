@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 
-import customers from "../../data/customers";
+import customersData from "../../data/customers";
 
 import SearchBox from "../../components/admin/SearchBox";
 import TableHeader from "../../components/admin/TableHeader";
@@ -8,19 +8,24 @@ import AdminTable from "../../components/admin/AdminTable";
 import Pagination from "../../components/admin/Pagination";
 import StatusBadge from "../../components/admin/StatusBadge";
 import TableActions from "../../components/admin/TableActions";
+import ConfirmModal from "../../components/ui/ConfirmModal";
 
 function CustomersPage() {
+  const [customers, setCustomers] = useState(customersData);
+
   const [search, setSearch] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
+
+  const [customerToDelete, setCustomerToDelete] = useState(null);
 
   const ITEMS_PER_PAGE = 6;
 
   const filteredCustomers = useMemo(() => {
     return customers.filter((customer) =>
-      customer.name.toLowerCase().includes(search.toLowerCase()),
+      (customer.name || "").toLowerCase().includes(search.toLowerCase()),
     );
-  }, [search]);
+  }, [customers, search]);
 
   const totalPages = Math.ceil(filteredCustomers.length / ITEMS_PER_PAGE);
 
@@ -88,9 +93,7 @@ function CustomersPage() {
               return (
                 <TableActions
                   viewLink={`/admin/customer-profile/${customer.id}`}
-                  onDelete={() => {
-                    console.log("Delete customer:", customer.id);
-                  }}
+                  onDelete={() => setCustomerToDelete(customer)}
                 />
               );
 
@@ -104,6 +107,21 @@ function CustomersPage() {
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={setCurrentPage}
+      />
+
+      <ConfirmModal
+        isOpen={!!customerToDelete}
+        title="حذف مشتری"
+        message={`آیا از حذف "${customerToDelete?.name}" مطمئن هستید؟`}
+        confirmText="حذف"
+        cancelText="انصراف"
+        onCancel={() => setCustomerToDelete(null)}
+        onConfirm={() => {
+          setCustomers((prev) =>
+            prev.filter((customer) => customer.id !== customerToDelete.id),
+          );
+          setCustomerToDelete(null);
+        }}
       />
     </section>
   );

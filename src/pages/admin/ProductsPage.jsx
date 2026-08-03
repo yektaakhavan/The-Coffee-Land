@@ -27,7 +27,7 @@ function ProductsPage() {
 
   const filteredProducts = useMemo(() => {
     return products.filter((product) =>
-      product.name.toLowerCase().includes(search.toLowerCase()),
+      (product.name || "").toLowerCase().includes(search.toLowerCase()),
     );
   }, [products, search]);
 

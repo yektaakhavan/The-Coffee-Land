@@ -1,24 +1,104 @@
 @import "tailwindcss";
 
+/*
+  Design tokens — overriding Tailwind's default "amber" scale.
+  Every bg-amber-*, text-amber-*, border-amber-* class already used
+  across the app now resolves to this palette instead of stock Tailwind
+  amber, so the whole site gets a more deliberate, less "AI template"
+  espresso/brass identity without touching every component file.
+*/
+@theme {
+  --color-amber-50: #fbf6ed;
+  --color-amber-100: #f3e9d4;
+  --color-amber-200: #e6d3ac;
+  --color-amber-300: #d3b784;
+  --color-amber-400: #c09a5f;
+  --color-amber-500: #a87c43;
+  --color-amber-600: #8c6434;
+  --color-amber-700: #6b4a28;
+  --color-amber-800: #4a331e;
+  --color-amber-900: #2e2013;
+  --color-amber-950: #1a130c;
+}
 
+/* Variable font — one file, full weight range (100–900) instead of
+   just Regular/Bold, so font-light / font-black etc. actually work. */
 @font-face {
-  font-family: 'Vazirmatn';
-  src: url('./assets/fonts/vazirmatn/Vazirmatn-Regular.woff2') format('woff2');
-  font-weight: 400;
+  font-family: "Vazirmatn";
+  src: url("./assets/fonts/vazirmatn/Vazirmatn[wght].woff2")
+    format("woff2-variations");
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
-
-@font-face {
-  font-family: 'Vazirmatn';
-  src: url('./assets/fonts/vazirmatn/Vazirmatn-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
 
 body {
-  font-family: 'Vazirmatn', sans-serif;
-  background-color: #FFFBEB;
+  font-family: "Vazirmatn", sans-serif;
+  background-color: #f5efe2;
+}
+
+/* Visible keyboard focus everywhere (accessibility) */
+:focus-visible {
+  outline: 2px solid #a87c43;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Shared warm color-grade for photographic images, so stock-style
+   photos across different pages read as one consistent brand instead
+   of raw, mismatched stock imagery. */
+.brand-photo {
+  filter: sepia(0.18) saturate(1.2) contrast(1.05) brightness(0.97);
+}
+
+/* Gentle scroll-reveal used by the <Reveal> component */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @keyframes reveal-up {
+    from {
+      opacity: 1;
+      transform: none;
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* Gentle rising steam over the hero cup */
+@keyframes steam-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scaleY(1);
+  }
+  30% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-22px) scaleY(1.15);
+  }
+}
+
+.steam-path {
+  animation: steam-rise 3.5s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .steam-path {
+    animation: none;
+    opacity: 0.35;
+  }
 }

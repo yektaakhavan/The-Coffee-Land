@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import { FaUserCircle } from "react-icons/fa";
-import { IoLogOutOutline } from "react-icons/io5";
+import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
 
 function UserMenu({ user, isAdmin, logout }) {
   return (
@@ -30,7 +29,7 @@ function UserMenu({ user, isAdmin, logout }) {
         onClick={logout}
         className="flex items-center gap-2 text-red-300 hover:text-red-400 transition"
       >
-        <IoLogOutOutline className="text-xl" />
+        <FaSignOutAlt className="text-xl" />
         خروج
       </button>
     </div>

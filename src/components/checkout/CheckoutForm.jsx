@@ -202,9 +202,9 @@ function CheckoutForm() {
           rounded-2xl
           bg-gradient-to-r
           from-amber-700
-          to-orange-700
+          to-amber-600
           hover:from-amber-800
-          hover:to-orange-800
+          hover:to-amber-700
           text-white
           font-bold
           text-lg

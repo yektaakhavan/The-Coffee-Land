@@ -47,6 +47,20 @@ function OrderProvider({ children }) {
     setOrders([]);
   };
 
+  // Update Order Status (used by the admin panel)
+
+  const updateOrderStatus = (id, status) => {
+    setOrders((prev) =>
+      prev.map((order) => (order.id === id ? { ...order, status } : order)),
+    );
+  };
+
+  // Delete Order (used by the admin panel)
+
+  const deleteOrder = (id) => {
+    setOrders((prev) => prev.filter((order) => order.id !== id));
+  };
+
   return (
     <OrderContext.Provider
       value={{
@@ -57,6 +71,10 @@ function OrderProvider({ children }) {
         getOrderById,
 
         clearOrders,
+
+        updateOrderStatus,
+
+        deleteOrder,
       }}
     >
       {children}

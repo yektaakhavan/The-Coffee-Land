@@ -35,7 +35,7 @@ function BlogPage() {
   }, [publishedPosts, activeCategory]);
 
   return (
-    <div className="bg-[#FFFBEB] min-h-screen">
+    <div className="bg-[#F5EFE2] min-h-screen">
       {/* Hero */}
       <section className="bg-amber-900 text-white">
         <div className="max-w-7xl mx-auto px-6 py-16 text-center">

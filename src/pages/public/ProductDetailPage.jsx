@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 
 import { useProducts } from "../../context/ProductContext";
 import { CartContext } from "../../context/CartContext";
+import { useToast } from "../../context/ToastContext";
 
 import StarRating from "../../components/shop/StarRating";
 import Badge from "../../components/shop/Badge";
@@ -16,6 +17,8 @@ function ProductDetailPage() {
   const { getProductBySlug } = useProducts();
 
   const { addToCart } = useContext(CartContext);
+
+  const { showToast } = useToast();
 
   const product = getProductBySlug(slug);
 
@@ -136,6 +139,7 @@ function ProductDetailPage() {
                   <button
                     key={index}
                     onClick={() => setSelectedImage(image)}
+                    aria-label={`تصویر ${index + 1} محصول`}
                     className={`
                           rounded-2xl
                           overflow-hidden
@@ -332,6 +336,7 @@ function ProductDetailPage() {
             <button
               onClick={() => {
                 addToCart(product, quantity, selectedSize);
+                showToast(`«${product.name}» به سبد خرید اضافه شد`);
               }}
               className="
                 w-full

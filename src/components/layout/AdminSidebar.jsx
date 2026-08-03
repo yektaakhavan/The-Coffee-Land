@@ -67,7 +67,7 @@ function AdminSidebar() {
       <nav className="flex flex-col gap-2">
         {menuItems.map((item) => (
           <NavLink
-            end      //برای اینکه پیشخوان رو به صورت اکتیو نداشته باشیم
+            end={item.to === "/admin"}
             key={item.to}
             to={item.to}
             className={({ isActive }) =>

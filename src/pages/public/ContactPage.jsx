@@ -70,7 +70,7 @@ function ContactPage() {
   ];
 
   return (
-    <div className="bg-[#FFFBEB]">
+    <div className="bg-[#F5EFE2]">
       {/* Hero */}
       <section className="bg-amber-900 text-white">
         <div className="max-w-7xl mx-auto px-6 py-16 text-center">

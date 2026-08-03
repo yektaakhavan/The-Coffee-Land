@@ -17,7 +17,7 @@ function CartItem({
       : item.stock <= 5
         ? {
             text: `فقط ${item.stock} عدد باقی مانده`,
-            color: "bg-orange-100 text-orange-600",
+            color: "bg-amber-100 text-amber-700",
           }
         : {
             text: "موجود",

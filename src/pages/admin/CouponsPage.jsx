@@ -6,9 +6,12 @@ import StatusBadge from "../../components/admin/StatusBadge";
 import TableHeader from "../../components/admin/TableHeader";
 import AdminTable from "../../components/admin/AdminTable";
 import TableActions from "../../components/admin/TableActions";
+import ConfirmModal from "../../components/ui/ConfirmModal";
 
 function CouponsPage() {
   const [coupons, setCoupons] = useState(couponsData);
+
+  const [couponToDelete, setCouponToDelete] = useState(null);
 
   const [form, setForm] = useState({
     code: "",
@@ -172,11 +175,26 @@ function CouponsPage() {
               return <StatusBadge status={coupon.status} />;
 
             case "actions":
-              return <TableActions onDelete={() => deleteCoupon(coupon.id)} />;
+              return (
+                <TableActions onDelete={() => setCouponToDelete(coupon)} />
+              );
 
             default:
               return coupon[key];
           }
+        }}
+      />
+
+      <ConfirmModal
+        isOpen={!!couponToDelete}
+        title="حذف کد تخفیف"
+        message={`آیا از حذف کد "${couponToDelete?.code}" مطمئن هستید؟`}
+        confirmText="حذف"
+        cancelText="انصراف"
+        onCancel={() => setCouponToDelete(null)}
+        onConfirm={() => {
+          deleteCoupon(couponToDelete.id);
+          setCouponToDelete(null);
         }}
       />
     </section>

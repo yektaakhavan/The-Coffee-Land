@@ -140,7 +140,7 @@ function ProductCard({ product }) {
               mt-1
             "
             >
-              Premium Coffee Selection
+              {product?.category?.title || "قهوه تخصصی"}
             </p>
           </div>
 
@@ -232,7 +232,7 @@ function ProductCard({ product }) {
               rounded-2xl
               bg-gradient-to-r
               from-amber-800
-              to-orange-700
+              to-amber-600
               text-white
               font-medium
               text-center

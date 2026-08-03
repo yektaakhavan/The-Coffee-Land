@@ -1,10 +1,8 @@
 import React, { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
-import { HiOutlineLogin } from "react-icons/hi";
-import { HiXMark } from "react-icons/hi2";
-import { CgMenuGridO } from "react-icons/cg";
-import { FaShoppingCart } from "react-icons/fa";
+import { HiXMark, HiBars3 } from "react-icons/hi2";
+import { FaShoppingCart, FaSignInAlt } from "react-icons/fa";
 
 import { menuItems } from "../../data/menuItems";
 
@@ -52,7 +50,7 @@ function PublicHeader() {
               to="/auth/sign-in"
               className="text-2xl hover:text-amber-300 transition"
             >
-              <HiOutlineLogin />
+              <FaSignInAlt />
             </Link>
           )}
 
@@ -61,7 +59,7 @@ function PublicHeader() {
             className="text-3xl"
             onClick={() => setIsMenuOpen((prev) => !prev)}
           >
-            {isMenuOpen ? <HiXMark /> : <CgMenuGridO />}
+            {isMenuOpen ? <HiXMark /> : <HiBars3 />}
           </button>
         </div>
 
@@ -102,7 +100,7 @@ function PublicHeader() {
               to="/auth/sign-in"
               className="flex items-center gap-2 bg-amber-700 hover:bg-amber-600 px-4 py-2 rounded-xl transition"
             >
-              <HiOutlineLogin className="text-xl" />
+              <FaSignInAlt className="text-xl" />
               ورود / عضویت
             </NavLink>
           ) : (

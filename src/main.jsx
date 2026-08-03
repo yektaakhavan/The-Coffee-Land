@@ -8,6 +8,7 @@ import CartProvider from "./context/CartContext.jsx";
 import OrderProvider from "./context/OrderContext.jsx";
 import { ProductProvider } from "./context/ProductContext.jsx";
 import { CategoryProvider } from "./context/CategoryContext.jsx";
+import { ToastProvider } from "./context/ToastContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -16,7 +17,9 @@ createRoot(document.getElementById("root")).render(
         <OrderProvider>
           <ProductProvider>
             <CategoryProvider>
-              <App />
+              <ToastProvider>
+                <App />
+              </ToastProvider>
             </CategoryProvider>
           </ProductProvider>
         </OrderProvider>

@@ -17,7 +17,7 @@ function CartSummary({
       <div className="rounded-3xl bg-white shadow-xl border border-stone-200 overflow-hidden">
         {/* Header */}
 
-        <div className="bg-gradient-to-r from-amber-800 to-orange-700 text-white p-5">
+        <div className="bg-gradient-to-r from-amber-800 to-amber-600 text-white p-5">
           <h2 className="text-xl font-bold">خلاصه سفارش</h2>
         </div>
 
@@ -99,7 +99,7 @@ function CartSummary({
               rounded-2xl
               bg-gradient-to-r
               from-amber-800
-              to-orange-700
+              to-amber-600
               text-white
               py-4
               font-bold
