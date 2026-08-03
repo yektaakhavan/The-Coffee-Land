@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { HiOutlineCalendar, HiOutlineUser, HiArrowLeft } from "react-icons/hi2";
 
 import blogPosts from "../../data/blogPosts";
+import Reveal from "../../components/ui/Reveal";
 
 function formatDate(dateStr) {
   try {
@@ -70,6 +71,7 @@ function ArticleDetailPage() {
         </div>
       </section>
 
+      <Reveal>
       <article className="max-w-3xl mx-auto px-6 py-14">
         <div className="bg-white rounded-3xl border border-amber-50 shadow-sm p-8 md:p-10">
           <p className="text-stone-600 leading-9 text-lg">{post.content}</p>
@@ -85,6 +87,7 @@ function ArticleDetailPage() {
           </Link>
         </div>
       </article>
+      </Reveal>
     </div>
   );
 }

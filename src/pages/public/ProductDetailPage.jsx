@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { FaSadTear } from "react-icons/fa";
 
 import { useProducts } from "../../context/ProductContext";
 import { CartContext } from "../../context/CartContext";
@@ -7,6 +8,7 @@ import { useToast } from "../../context/ToastContext";
 
 import StarRating from "../../components/shop/StarRating";
 import Badge from "../../components/shop/Badge";
+import Reveal from "../../components/ui/Reveal";
 
 import formatPrice from "../../utils/formatPrice.js";
 import calculateFinalPrice from "../../utils/calculateFinalPrice.js";
@@ -28,18 +30,28 @@ function ProductDetailPage() {
         className="
         min-h-screen
         flex
+        flex-col
         items-center
         justify-center
+        gap-4
       "
       >
+        <FaSadTear className="text-5xl text-amber-300" />
         <h2
           className="
           text-3xl
           font-bold
         "
         >
-          محصول پیدا نشد 😥
+          محصول پیدا نشد
         </h2>
+
+        <Link
+          to="/shop"
+          className="bg-amber-800 hover:bg-amber-700 text-white font-bold px-6 py-3 rounded-2xl transition"
+        >
+          بازگشت به فروشگاه
+        </Link>
       </div>
     );
   }
@@ -66,7 +78,7 @@ function ProductDetailPage() {
   return (
     <div
       className="
-      bg-stone-100
+      bg-[#F5EFE2]
       min-h-screen
       py-10
       px-5
@@ -87,17 +99,22 @@ function ProductDetailPage() {
           mb-8
         "
         >
-          <Link to="/">خانه</Link>
+          <Link to="/" className="hover:text-amber-700 transition">
+            خانه
+          </Link>
 
           <span className="mx-2">/</span>
 
-          <Link to="/shop">فروشگاه</Link>
+          <Link to="/shop" className="hover:text-amber-700 transition">
+            فروشگاه
+          </Link>
 
           <span className="mx-2">/</span>
 
           <span>{product.name}</span>
         </div>
 
+        <Reveal>
         <div
           className="
           grid
@@ -144,6 +161,8 @@ function ProductDetailPage() {
                           rounded-2xl
                           overflow-hidden
                           border-2
+                          transition
+                          hover:opacity-80
 
                           ${
                             selectedImage === image
@@ -264,11 +283,12 @@ function ProductDetailPage() {
                           px-5
                           py-3
                           rounded-xl
+                          transition
 
                           ${
                             selectedSize === size
                               ? "bg-amber-800 text-white"
-                              : "bg-gray-200"
+                              : "bg-gray-200 hover:bg-amber-100"
                           }
 
                         `}
@@ -292,11 +312,15 @@ function ProductDetailPage() {
               >
                 <button
                   onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
+                  aria-label="کاهش تعداد"
                   className="
                     w-10
                     h-10
                     rounded-lg
                     bg-gray-200
+                    hover:bg-amber-100
+                    hover:text-amber-800
+                    transition
                   "
                 >
                   -
@@ -306,11 +330,15 @@ function ProductDetailPage() {
 
                 <button
                   onClick={() => setQuantity((prev) => prev + 1)}
+                  aria-label="افزایش تعداد"
                   className="
                     w-10
                     h-10
                     rounded-lg
                     bg-gray-200
+                    hover:bg-amber-100
+                    hover:text-amber-800
+                    transition
                   "
                 >
                   +
@@ -343,17 +371,22 @@ function ProductDetailPage() {
                 mt-8
                 bg-amber-800
                 hover:bg-amber-700
+                hover:shadow-lg
+                hover:-translate-y-0.5
                 text-white
                 py-4
                 rounded-2xl
                 text-lg
                 font-bold
+                transition
+                duration-300
               "
             >
               افزودن به سبد خرید
             </button>
           </div>
         </div>
+        </Reveal>
       </div>
     </div>
   );

@@ -1,42 +1,56 @@
-// SHOP PAGE
+import { lazy } from "react";
+
 import PublicLayout from "./components/layout/PublicLayout";
-import HomePage from "./pages/public/HomePage";
-import ShopPage from "./pages/public/ShopPage";
-import BlogPage from "./pages/public/BlogPage";
-import AboutPage from "./pages/public/AboutPage";
-import ContactPage from "./pages/public/ContactPage";
-import CartPage from "./pages/public/CartPage";
-import ProductDetailPage from "./pages/public/ProductDetailPage";
-import CheckOutPage from "./pages/public/CheckOutPage";
-import PaymentPage from "./pages/public/PaymentPage";
-import OrderSuccessPage from "./pages/public/OrderSuccessPage";
-import ArticlesPage from "./pages/public/ArticlesPage";
-import ArticleDetailPage from "./pages/public/ArticleDetailPage";
-
-//AUTH PAGE
-import SignInPage from "./pages/auth/SignInPage";
-import SignUpPage from "./pages/auth/SignUpPage";
-
-//ADMIN PAGE
 import AdminLayout from "./components/layout/AdminLayout";
-import DashboardPage from "./pages/admin/DashboardPage";
-import AddProductPage from "./pages/admin/AddProductPage";
-import ArticlePostPage from "./pages/admin/ArticlePostPage";
-import CategoryPage from "./pages/admin/CategoryPage";
-import CouponsPage from "./pages/admin/CouponsPage";
-import CustomerProfilePage from "./pages/admin/CustomerProfilePage";
-import CustomersPage from "./pages/admin/CustomersPage";
-import OrderDetailCustomerPage from "./pages/admin/OrderDetailCustomerPage";
-import OrdersPage from "./pages/admin/OrdersPage";
-import ProductEditPage from "./pages/admin/ProductEditPage";
-import ProductsPage from "./pages/admin/ProductsPage";
-import ReviewPage from "./pages/admin/ReviewPage";
-import SettingPage from "./pages/admin/SettingPage";
-
-//NOT FOUND PAGE
-import NotFoundPage from "./pages/NotFoundPage";
 import ProtectedRoute from "./components/shared/ProtectedRoute";
 import GuestRoute from "./components/shared/GuestRoute";
+
+// SHOP PAGE — lazy-loaded so each route ships its own chunk instead of
+// one large bundle for the whole app.
+const HomePage = lazy(() => import("./pages/public/HomePage"));
+const ShopPage = lazy(() => import("./pages/public/ShopPage"));
+const BlogPage = lazy(() => import("./pages/public/BlogPage"));
+const AboutPage = lazy(() => import("./pages/public/AboutPage"));
+const ContactPage = lazy(() => import("./pages/public/ContactPage"));
+const CartPage = lazy(() => import("./pages/public/CartPage"));
+const ProductDetailPage = lazy(() =>
+  import("./pages/public/ProductDetailPage"),
+);
+const CheckOutPage = lazy(() => import("./pages/public/CheckOutPage"));
+const PaymentPage = lazy(() => import("./pages/public/PaymentPage"));
+const OrderSuccessPage = lazy(() =>
+  import("./pages/public/OrderSuccessPage"),
+);
+const ArticlesPage = lazy(() => import("./pages/public/ArticlesPage"));
+const ArticleDetailPage = lazy(() =>
+  import("./pages/public/ArticleDetailPage"),
+);
+
+//AUTH PAGE
+const SignInPage = lazy(() => import("./pages/auth/SignInPage"));
+const SignUpPage = lazy(() => import("./pages/auth/SignUpPage"));
+
+//ADMIN PAGE
+const DashboardPage = lazy(() => import("./pages/admin/DashboardPage"));
+const AddProductPage = lazy(() => import("./pages/admin/AddProductPage"));
+const ArticlePostPage = lazy(() => import("./pages/admin/ArticlePostPage"));
+const CategoryPage = lazy(() => import("./pages/admin/CategoryPage"));
+const CouponsPage = lazy(() => import("./pages/admin/CouponsPage"));
+const CustomerProfilePage = lazy(() =>
+  import("./pages/admin/CustomerProfilePage"),
+);
+const CustomersPage = lazy(() => import("./pages/admin/CustomersPage"));
+const OrderDetailCustomerPage = lazy(() =>
+  import("./pages/admin/OrderDetailCustomerPage"),
+);
+const OrdersPage = lazy(() => import("./pages/admin/OrdersPage"));
+const ProductEditPage = lazy(() => import("./pages/admin/ProductEditPage"));
+const ProductsPage = lazy(() => import("./pages/admin/ProductsPage"));
+const ReviewPage = lazy(() => import("./pages/admin/ReviewPage"));
+const SettingPage = lazy(() => import("./pages/admin/SettingPage"));
+
+//NOT FOUND PAGE
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 
 const routes = [
   // ========== فروشگاه (با هدر و فوتر) ==========

@@ -15,6 +15,7 @@ import {
 } from "react-icons/fa";
 
 import { contactSchema } from "../../validation/contactSchema";
+import Reveal from "../../components/ui/Reveal";
 
 function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -89,6 +90,7 @@ function ContactPage() {
         </div>
       </section>
 
+      <Reveal>
       <section className="max-w-6xl mx-auto px-6 py-16 grid lg:grid-cols-5 gap-10">
         {/* Info */}
         <div className="lg:col-span-2 space-y-5">
@@ -247,13 +249,16 @@ function ContactPage() {
           </form>
         </div>
       </section>
+      </Reveal>
 
       {/* Map placeholder */}
+      <Reveal>
       <section className="max-w-6xl mx-auto px-6 pb-16">
         <div className="rounded-[32px] overflow-hidden border border-amber-100 h-72 bg-gradient-to-br from-amber-100 to-stone-100 flex items-center justify-center text-amber-800/60 font-semibold">
           نقشه موقعیت فروشگاه
         </div>
       </section>
+      </Reveal>
     </div>
   );
 }

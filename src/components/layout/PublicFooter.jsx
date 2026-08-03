@@ -50,7 +50,11 @@ function PublicFooter() {
             </div>
           </div>
           <div className="flex justify-center">
-            <img className="w-50 h-50" src={coffeeTime} alt="" />
+            <img
+              className="w-28 h-28 object-contain"
+              src={coffeeTime}
+              alt=""
+            />
           </div>
         </div>
       </footer>

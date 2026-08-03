@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { HiOutlineCalendar, HiOutlineUser } from "react-icons/hi2";
 
 import blogPosts from "../../data/blogPosts";
+import Reveal from "../../components/ui/Reveal";
 
 function formatDate(dateStr) {
   try {
@@ -23,6 +24,7 @@ function ArticlesPage() {
 
   return (
     <div className="bg-[#F5EFE2] min-h-screen">
+      <Reveal>
       <section className="max-w-4xl mx-auto px-6 py-16">
         <div className="text-center mb-12">
           <span className="inline-block bg-amber-50 text-amber-700 text-sm px-4 py-1.5 rounded-full mb-6 border border-amber-100">
@@ -45,7 +47,7 @@ function ArticlesPage() {
         ) : (
           <div className="divide-y divide-amber-100 bg-white rounded-3xl border border-amber-50 shadow-sm">
             {publishedPosts.map((post) => (
-              <article key={post.id} className="p-7 md:p-9">
+              <article key={post.id} className="p-7 md:p-9 hover:bg-amber-50/40 transition">
                 <span className="text-xs font-semibold text-amber-700 bg-amber-50 px-3 py-1 rounded-full">
                   {post.category}
                 </span>
@@ -73,6 +75,7 @@ function ArticlesPage() {
           </div>
         )}
       </section>
+      </Reveal>
     </div>
   );
 }

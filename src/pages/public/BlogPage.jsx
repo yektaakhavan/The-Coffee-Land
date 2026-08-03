@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { HiOutlineCalendar, HiOutlineUser, HiChevronDown } from "react-icons/hi2";
 
 import blogPosts from "../../data/blogPosts";
+import Reveal from "../../components/ui/Reveal";
 
 function formatDate(dateStr) {
   try {
@@ -54,6 +55,7 @@ function BlogPage() {
         </div>
       </section>
 
+      <Reveal>
       <section className="max-w-5xl mx-auto px-6 py-14">
         {/* Category filter */}
         <div className="flex flex-wrap justify-center gap-3 mb-12">
@@ -96,7 +98,7 @@ function BlogPage() {
               return (
                 <article
                   key={post.id}
-                  className="bg-white rounded-3xl border border-amber-50 shadow-sm overflow-hidden"
+                  className="bg-white rounded-3xl border border-amber-50 shadow-sm overflow-hidden hover:shadow-lg transition duration-300"
                 >
                   <button
                     type="button"
@@ -151,6 +153,7 @@ function BlogPage() {
           </div>
         )}
       </section>
+      </Reveal>
     </div>
   );
 }
