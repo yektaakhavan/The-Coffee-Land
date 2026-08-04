@@ -21,7 +21,6 @@ const PaymentPage = lazy(() => import("./pages/public/PaymentPage"));
 const OrderSuccessPage = lazy(() =>
   import("./pages/public/OrderSuccessPage"),
 );
-const ArticlesPage = lazy(() => import("./pages/public/ArticlesPage"));
 const ArticleDetailPage = lazy(() =>
   import("./pages/public/ArticleDetailPage"),
 );
@@ -61,7 +60,6 @@ const routes = [
       { path: "shop", element: <ShopPage /> },
       { path: "product/:slug", element: <ProductDetailPage /> },
       { path: "blog", element: <BlogPage /> },
-      { path: "articles", element: <ArticlesPage /> },
       { path: "articles/:slug", element: <ArticleDetailPage /> },
       { path: "about", element: <AboutPage /> },
       { path: "contact", element: <ContactPage /> },

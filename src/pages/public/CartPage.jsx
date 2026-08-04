@@ -14,7 +14,7 @@ function CartPage() {
     totalDiscount,
     shipping,
     totalPrice,
-     FREE_SHIPPING_LIMIT,
+    FREE_SHIPPING_LIMIT,
   } = useContext(CartContext);
 
 
@@ -49,9 +49,9 @@ function CartPage() {
   // ================= Cart =================
 
   return (
-    <section className="bg-stone-100 py-12 min-h-screen">
+    <section className="bg-[#F5EFE2] py-12 min-h-screen">
       <div className="max-w-7xl mx-auto px-5">
-        <h1 className="text-4xl font-bold text-amber-900 mb-10">سبد خرید</h1>
+        <h1 className="text-4xl font-black text-amber-900 mb-10">سبد خرید</h1>
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Products */}

@@ -21,21 +21,21 @@ function DashboardStats() {
         title="کل مشتریان"
         value="842"
         icon={<FaUsers />}
-        color="bg-sky-600"
+        color="bg-stone-700"
       />
 
       <DashboardCard
         title="سفارش امروز"
         value="37"
         icon={<FaShoppingCart />}
-        color="bg-emerald-600"
+        color="bg-amber-900"
       />
 
       <DashboardCard
         title="فروش امروز"
         value="18.4M"
         icon={<FaMoneyBillWave />}
-        color="bg-purple-600"
+        color="bg-amber-500"
       />
     </div>
   );

@@ -1,5 +1,6 @@
 import orders from "../../data/orders";
 import formatPrice from "../../utils/formatPrice.js";
+import StatusBadge from "./StatusBadge";
 
 function RecentOrders() {
   const recentOrders = orders.slice(0, 5);
@@ -26,14 +27,12 @@ function RecentOrders() {
               <tr key={order.id} className="border-b hover:bg-stone-50">
                 <td className="py-4">#{order.id}</td>
 
-                <td>{order.customerName}</td>
+                <td>{order.customer}</td>
 
                 <td>{formatPrice(order.total)}</td>
 
                 <td>
-                  <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
-                    {order.status}
-                  </span>
+                  <StatusBadge status={order.status} />
                 </td>
               </tr>
             ))}

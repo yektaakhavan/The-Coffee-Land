@@ -10,11 +10,14 @@ import PaymentMethod from "./PaymentMethod";
 
 import { CartContext } from "../../context/CartContext";
 import { OrderContext } from "../../context/OrderContext";
+import { useToast } from "../../context/ToastContext";
 
 function CheckoutForm() {
   const [deliveryMethod, setDeliveryMethod] = useState("post");
 
   const [paymentMethod, setPaymentMethod] = useState("online");
+
+  const { showToast } = useToast();
 
   const {
     register,
@@ -84,6 +87,8 @@ function CheckoutForm() {
     });
 
     clearCart();
+
+    showToast("سفارش شما با موفقیت ثبت شد ✅");
 
     navigate("/order-success", {
       state: {

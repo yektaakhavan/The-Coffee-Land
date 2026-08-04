@@ -12,19 +12,19 @@ const actions = [
     title: "مدیریت سفارش‌ها",
     icon: <FaClipboardList />,
     to: "/admin/orders",
-    color: "bg-sky-600",
+    color: "bg-stone-700",
   },
   {
     title: "مدیریت مشتریان",
     icon: <FaUsers />,
     to: "/admin/customers",
-    color: "bg-emerald-600",
+    color: "bg-amber-900",
   },
   {
     title: "نوشتن مقاله",
     icon: <FaPenNib />,
     to: "/admin/blog",
-    color: "bg-purple-600",
+    color: "bg-amber-500",
   },
 ];
 

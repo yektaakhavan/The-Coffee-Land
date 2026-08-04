@@ -29,7 +29,7 @@ function OrderSuccessPage() {
         <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
           {/* Header */}
 
-          <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white py-10 px-8">
+          <div className="bg-gradient-to-r from-emerald-700 to-amber-800 text-white py-10 px-8">
             <div className="flex justify-center mb-5">
               <FaCheckCircle className="text-7xl" />
             </div>
@@ -119,11 +119,10 @@ function OrderSuccessPage() {
 
               <Link
                 to="/shop"
-                // to="/dashboard/orders"
                 className="flex items-center justify-center gap-3 border-2 border-amber-700 text-amber-700 hover:bg-amber-50 py-4 rounded-2xl transition"
               >
                 <FaShoppingBag />
-                مشاهده سفارش‌ها
+                ادامه خرید
               </Link>
             </div>
 

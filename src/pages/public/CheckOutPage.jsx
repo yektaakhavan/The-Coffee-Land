@@ -14,9 +14,9 @@ function CheckoutPage() {
   }
 
   return (
-    <section className="bg-stone-100 min-h-screen py-10">
+    <section className="bg-[#F5EFE2] min-h-screen py-10">
       <div className="max-w-7xl mx-auto px-5">
-        <h1 className="text-4xl font-bold text-amber-900 mb-10">تکمیل سفارش</h1>
+        <h1 className="text-4xl font-black text-amber-900 mb-10">تکمیل سفارش</h1>
 
         <div className="grid lg:grid-cols-3 gap-8 items-start">
           <div className="lg:col-span-2">
