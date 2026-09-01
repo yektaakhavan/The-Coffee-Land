@@ -1,3 +1,4 @@
+import React from "react";
 import { Link } from "react-router-dom";
 
 import StarRating from "../shop/StarRating";
@@ -70,6 +71,8 @@ function ProductCard({ product }) {
           <img
             src={image}
             alt={product.name}
+            loading="lazy"
+            decoding="async"
             className="
               w-full
               h-64
@@ -252,4 +255,4 @@ function ProductCard({ product }) {
   );
 }
 
-export default ProductCard;
+export default React.memo(ProductCard);

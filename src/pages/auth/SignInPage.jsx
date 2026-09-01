@@ -7,6 +7,7 @@ import { HiOutlineLogin } from "react-icons/hi";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserInfoContext } from "../../context/AuthContext";
+import hashPassword from "../../utils/hashPassword.js";
 
 function SignInPage() {
   const { login } = useContext(UserInfoContext);
@@ -77,7 +78,9 @@ function SignInPage() {
       return;
     }
 
-    if (foundUser.password !== data.password) {
+    const hashedInput = await hashPassword(data.password);
+
+    if (foundUser.password !== hashedInput) {
       setError("password", {
         type: "manual",
         message: "رمز عبور اشتباه است",

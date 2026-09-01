@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import hashPassword from "../../utils/hashPassword.js";
 
 function SignUpPage() {
   const {
@@ -49,7 +50,9 @@ function SignUpPage() {
     const newUser = {
       fullName: data.fullName,
       email: data.email,
-      password: data.password,
+      // Store a SHA-256 hash, never the raw password — see hashPassword.js
+      // for why this is still not a substitute for real server-side auth.
+      password: await hashPassword(data.password),
       role: data.email === "admin@gmail.com" ? "admin" : "customer",
     };
 

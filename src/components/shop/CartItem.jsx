@@ -33,6 +33,8 @@ function CartItem({
           <img
             src={item.images?.[0] || item.image}
             alt={item.name}
+            loading="lazy"
+            decoding="async"
             className="
               h-60
               w-full
