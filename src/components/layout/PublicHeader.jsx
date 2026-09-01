@@ -34,7 +34,11 @@ function PublicHeader() {
 
         <div className="md:hidden flex items-center gap-5">
           {/* Cart */}
-          <Link to="/cart" className="relative hover:text-amber-300 transition">
+          <Link
+            to="/cart"
+            aria-label="سبد خرید"
+            className="relative hover:text-amber-300 transition"
+          >
             <FaShoppingCart className="text-2xl" />
 
             {totalItems > 0 && (
@@ -48,6 +52,7 @@ function PublicHeader() {
           {!isAuthenticated && (
             <Link
               to="/auth/sign-in"
+              aria-label="ورود"
               className="text-2xl hover:text-amber-300 transition"
             >
               <FaSignInAlt />
@@ -83,7 +88,11 @@ function PublicHeader() {
 
           {/* Cart */}
 
-          <Link to="/cart" className="relative hover:text-amber-300 transition">
+          <Link
+            to="/cart"
+            aria-label="سبد خرید"
+            className="relative hover:text-amber-300 transition"
+          >
             <FaShoppingCart className="text-2xl" />
 
             {totalItems > 0 && (

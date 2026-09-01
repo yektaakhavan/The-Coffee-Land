@@ -37,14 +37,14 @@ function ProductDetailPage() {
       "
       >
         <FaSadTear className="text-5xl text-amber-300" />
-        <h2
+        <h1
           className="
           text-3xl
           font-bold
         "
         >
           محصول پیدا نشد
-        </h2>
+        </h1>
 
         <Link
           to="/shop"
@@ -272,7 +272,7 @@ function ProductDetailPage() {
 
             {sizes.length > 0 && (
               <div className="mt-10">
-                <h3 className="font-bold mb-4">انتخاب وزن</h3>
+                <h2 className="font-bold mb-4">انتخاب وزن</h2>
 
                 <div className="flex gap-3">
                   {sizes.map((size) => (
@@ -301,7 +301,7 @@ function ProductDetailPage() {
             )}
 
             <div className="mt-10">
-              <h3 className="font-bold mb-4">تعداد</h3>
+              <h2 className="font-bold mb-4">تعداد</h2>
 
               <div
                 className="

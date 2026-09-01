@@ -25,7 +25,7 @@ import blogPosts from "../../data/blogPosts";
 import reviews from "../../data/reviews";
 
 import heroImage from "../../assets/images/product/cup-of-coffee.jpg";
-import storyImage from "../../assets/images/product/coffee-shops-coffee.png";
+import storyImage from "../../assets/images/product/coffee-shops-coffee.webp";
 import ctaImage from "../../assets/images/product/coffee-time-quote.png";
 
 const categoryIcons = {

@@ -11,7 +11,7 @@ import {
 import Reveal from "../../components/ui/Reveal";
 
 import aboutHero from "../../assets/images/product/coffee.jpg";
-import teamImage from "../../assets/images/product/coffee-time.png";
+import teamImage from "../../assets/images/product/coffee-time-large.webp";
 
 const stats = [
   { label: "مشتری راضی", value: "+۵٬۰۰۰" },

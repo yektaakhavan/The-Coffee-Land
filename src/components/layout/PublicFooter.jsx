@@ -7,7 +7,7 @@ import {
   FaTelegramPlane,
   FaWhatsapp,
 } from "react-icons/fa";
-import coffeeTime from "../../assets/images/product/coffee-time.png";
+import coffeeTime from "../../assets/images/product/coffee-time.webp";
 
 function PublicFooter() {
   return (
@@ -32,19 +32,36 @@ function PublicFooter() {
           <div>
             <h2 className="text-xl font-bold mb-4">شبکه های اجتماعی</h2>
             <div className="flex justify-between bg-amber-700 rounded-2xl py-2 px-4 w-60">
-              <a href="https://github.com" data-label="GitHub">
+              <a
+                href="https://github.com"
+                aria-label="گیت‌هاب"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FaGithub className="text-2xl hover:text-amber-200 transition" />
               </a>
               <a
                 href="https://linkedin.com/in/yekta-akhavan"
-                data-label="LinkedIn"
+                aria-label="لینکدین"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <FaLinkedin className="text-2xl hover:text-amber-200 transition" />
               </a>
-              <a href="https://t.me" data-label="Telegram">
+              <a
+                href="https://t.me"
+                aria-label="تلگرام"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FaTelegramPlane className="text-2xl hover:text-amber-200 transition" />
               </a>
-              <a href="https://watsapp" data-label="WhatsApp">
+              <a
+                href="https://watsapp"
+                aria-label="واتساپ"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FaWhatsapp className="text-2xl hover:text-amber-200 transition" />
               </a>
             </div>
