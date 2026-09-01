@@ -6,9 +6,6 @@ dashboard** — product, category, order, coupon, review, and article
 management, all wired end-to-end (a real order placed at checkout actually
 shows up in the admin panel, not just mock data).
 
-> این یک پروژه شخصی است که برای تمرین معماری فرانت‌اند و ساخت یک فروشگاه
-> آنلاین کامل (شامل پنل مشتری و پنل مدیریت) توسعه داده شده است.
-
 ---
 
 ## ✨ Features
