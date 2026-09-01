@@ -108,8 +108,8 @@ A few deliberate decisions, for anyone reviewing this project:
 
 ## 📸 Screenshots
 
-*(Add screenshots to `docs/screenshots/` and reference them here — e.g.
-`![Home page](docs/screenshots/home.png)`.)*
+
+![Home page](/src/assets/images/Preview/Home-Banner.png)`.
 
 ---
 
