@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 
-import seedOrders from "../../data/orders";
 import { OrderContext } from "../../context/OrderContext";
 
 import StatusBadge from "../../components/admin/StatusBadge";
@@ -11,8 +10,9 @@ import normalizeOrder from "../../utils/normalizeOrder";
 
 const STATUS_OPTIONS = [
   { value: "pending", label: "در انتظار" },
+  { value: "processing", label: "در حال پردازش" },
   { value: "shipped", label: "ارسال شده" },
-  { value: "completed", label: "تکمیل شده" },
+  { value: "delivered", label: "تحویل داده شده" },
   { value: "cancelled", label: "لغو شده" },
 ];
 
@@ -22,9 +22,7 @@ function OrderDetailCustomerPage() {
   const { orders: checkoutOrders, updateOrderStatus } =
     useContext(OrderContext);
 
-  const rawOrder =
-    checkoutOrders.find((item) => String(item.id) === id) ||
-    seedOrders.find((item) => String(item.id) === id);
+  const rawOrder = checkoutOrders.find((item) => String(item.id) === id);
 
   if (!rawOrder) {
     return (

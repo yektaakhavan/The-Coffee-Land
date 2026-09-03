@@ -1,63 +1,113 @@
 import { createContext, useEffect, useState } from "react";
+import { api } from "../lib/api.js";
 
 export const OrderContext = createContext();
 
+// The API returns Postgres rows (snake_case columns). The rest of the
+// app — normalizeOrder.js, OrderSuccessPage, admin order pages — expects
+// camelCase. This adapter bridges the two without touching every page.
+function toLegacyOrder(apiOrder) {
+  return {
+    id: apiOrder.id,
+    orderNumber: apiOrder.order_number,
+    customer: apiOrder.customer,
+    createdAt: apiOrder.created_at,
+    deliveryMethod: apiOrder.delivery_method,
+    paymentMethod: apiOrder.payment_method,
+    items: (apiOrder.items || []).map((item) => ({
+      id: item.productId,
+      name: item.name,
+      quantity: item.quantity,
+      finalPrice: item.price,
+    })),
+    shippingCost: Number(apiOrder.shipping_cost),
+    totalPrice: Number(apiOrder.total_price),
+    status: apiOrder.status,
+  };
+}
+
+function getStoredRole() {
+  try {
+    const auth = JSON.parse(localStorage.getItem("auth"));
+    return auth?.user?.role || null;
+  } catch {
+    return null;
+  }
+}
+
 function OrderProvider({ children }) {
-  const [orders, setOrders] = useState(() => {
-    const savedOrders = localStorage.getItem("orders");
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-    return savedOrders ? JSON.parse(savedOrders) : [];
-  });
+  async function refresh() {
+    const role = getStoredRole();
+    if (!role) {
+      setOrders([]);
+      return;
+    }
 
-  // Save Orders
+    setLoading(true);
+    setError(null);
+    try {
+      const apiOrders =
+        role === "admin" ? await api.getAllOrders() : await api.getMyOrders();
+      setOrders(apiOrders.map(toLegacyOrder));
+    } catch (err) {
+      setError(err.message || "خطا در دریافت سفارش‌ها");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
-    localStorage.setItem("orders", JSON.stringify(orders));
-  }, [orders]);
+    refresh();
+    // Re-fetch whenever the user logs in/out — "storage" covers other
+    // tabs, "auth-changed" covers this same tab (storage events don't
+    // fire in the tab that made the change).
+    window.addEventListener("storage", refresh);
+    window.addEventListener("auth-changed", refresh);
+    return () => {
+      window.removeEventListener("storage", refresh);
+      window.removeEventListener("auth-changed", refresh);
+    };
+  }, []);
 
-  // Create Order
-
-  const createOrder = (orderData) => {
-    const newOrder = {
-      id: crypto.randomUUID ? crypto.randomUUID() : Date.now(),
-
-      orderNumber: "#" + Math.floor(100000 + Math.random() * 900000),
-
-      createdAt: new Date().toISOString(),
-
-      status: "pending",
-
-      ...orderData,
+  // orderData: { customer, deliveryMethod, paymentMethod, items }
+  // items here are cart items (with `id` = productId, `quantity`) —
+  // price is NEVER trusted from the client; the server recalculates it
+  // from the product catalog.
+  const createOrder = async (orderData) => {
+    const payload = {
+      customer: orderData.customer,
+      deliveryMethod: orderData.deliveryMethod,
+      paymentMethod: orderData.paymentMethod,
+      items: orderData.items.map((item) => ({
+        productId: item.id,
+        quantity: item.quantity,
+      })),
     };
 
-    setOrders((prev) => [newOrder, ...prev]);
+    const apiOrder = await api.createOrder(payload);
+    const legacyOrder = toLegacyOrder(apiOrder);
 
-    return newOrder;
+    setOrders((prev) => [legacyOrder, ...prev]);
+    return legacyOrder;
   };
-
-  // Get Order By Id
 
   const getOrderById = (id) => {
     return orders.find((order) => order.id === id);
   };
 
-  // Clear Orders (for testing)
-
-  const clearOrders = () => {
-    setOrders([]);
-  };
-
-  // Update Order Status (used by the admin panel)
-
-  const updateOrderStatus = (id, status) => {
+  const updateOrderStatus = async (id, status) => {
+    await api.updateOrderStatus(id, status);
     setOrders((prev) =>
       prev.map((order) => (order.id === id ? { ...order, status } : order)),
     );
   };
 
-  // Delete Order (used by the admin panel)
-
-  const deleteOrder = (id) => {
+  const deleteOrder = async (id) => {
+    await api.deleteOrder(id);
     setOrders((prev) => prev.filter((order) => order.id !== id));
   };
 
@@ -65,16 +115,13 @@ function OrderProvider({ children }) {
     <OrderContext.Provider
       value={{
         orders,
-
+        loading,
+        error,
         createOrder,
-
         getOrderById,
-
-        clearOrders,
-
         updateOrderStatus,
-
         deleteOrder,
+        refresh,
       }}
     >
       {children}

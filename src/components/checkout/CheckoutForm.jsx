@@ -58,43 +58,33 @@ function CheckoutForm() {
 
     `;
 
-  const onSubmit = (data) => {
+  const [submitError, setSubmitError] = useState(null);
+
+  const onSubmit = async (data) => {
     if (cartItems.length === 0) return;
 
-    const shippingCost =
-      deliveryMethod === "pickup"
-        ? 0
-        : deliveryMethod === "express"
-          ? 90000
-          : 60000;
+    setSubmitError(null);
 
-    const totalPrice = subtotal + shippingCost;
+    try {
+      const newOrder = await createOrder({
+        customer: data,
+        deliveryMethod,
+        paymentMethod,
+        items: cartItems,
+      });
 
-    const newOrder = createOrder({
-      customer: data,
+      clearCart();
 
-      deliveryMethod,
+      showToast("سفارش شما با موفقیت ثبت شد ✅");
 
-      paymentMethod,
-
-      items: cartItems,
-
-      subtotal,
-
-      shippingCost,
-
-      totalPrice,
-    });
-
-    clearCart();
-
-    showToast("سفارش شما با موفقیت ثبت شد ✅");
-
-    navigate("/order-success", {
-      state: {
-        order: newOrder,
-      },
-    });
+      navigate("/order-success", {
+        state: {
+          order: newOrder,
+        },
+      });
+    } catch (err) {
+      setSubmitError(err.message || "ثبت سفارش با خطا مواجه شد");
+    }
   };
 
   return (
@@ -197,6 +187,10 @@ function CheckoutForm() {
       />
 
       <PaymentMethod selected={paymentMethod} setSelected={setPaymentMethod} />
+
+      {submitError && (
+        <p className="text-red-600 text-sm text-center mb-3">{submitError}</p>
+      )}
 
       <button
         type="submit"

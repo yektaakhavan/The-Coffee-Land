@@ -1,9 +1,11 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import hashPassword from "../../utils/hashPassword.js";
+import { UserInfoContext } from "../../context/AuthContext";
 
 function SignUpPage() {
+  const { register: registerUser } = useContext(UserInfoContext);
+
   const {
     register,
     handleSubmit,
@@ -42,41 +44,24 @@ function SignUpPage() {
   // Function
   // وقتی کاربر فرم رو submit می‌کنه، React Hook Form همه مقدار inputها رو جمع می‌کنه و داخل data می‌ریزه.
   const onSubmit = async (data) => {
-    // console.log(data);
-    // localStorage.setItem("registeredUser", JSON.stringify(data));
-    //در کد بالا کل data ذخیره میشوند اما ما ذخیره ی ConfirmPassword را نیاز نداریم پس میتونم به شکل زیر بنویسیم.
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    try {
+      const user = await registerUser({
+        fullName: data.fullName,
+        email: data.email,
+        password: data.password,
+      });
 
-    const newUser = {
-      fullName: data.fullName,
-      email: data.email,
-      // Store a SHA-256 hash, never the raw password — see hashPassword.js
-      // for why this is still not a substitute for real server-side auth.
-      password: await hashPassword(data.password),
-      role: data.email === "admin@gmail.com" ? "admin" : "customer",
-    };
+      reset();
 
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-
-    //users.some:می‌گردد ببیند حداقل یک کاربر با این ایمیل هست یا نه.
-    const isUserExist = users.some((user) => user.email === data.email);
-
-    if (isUserExist) {
+      // Registration also logs the user in (the API returns a token),
+      // so send them straight into the app instead of back to sign-in.
+      navigate(user.role === "admin" ? "/admin" : "/");
+    } catch (err) {
       setError("email", {
         type: "manual",
-        message: "این ایمیل قبلا ثبت شده است",
+        message: err.message || "ثبت‌نام انجام نشد",
       });
-      return;
     }
-
-    users.push(newUser);
-    localStorage.setItem("users", JSON.stringify(users));
-
-    // localStorage.setItem("registeredUser", JSON.stringify(newUser));
-
-    reset();
-
-    navigate("/auth/sign-in");
   };
 
   return (

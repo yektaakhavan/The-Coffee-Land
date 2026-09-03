@@ -7,7 +7,6 @@ import { HiOutlineLogin } from "react-icons/hi";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserInfoContext } from "../../context/AuthContext";
-import hashPassword from "../../utils/hashPassword.js";
 
 function SignInPage() {
   const { login } = useContext(UserInfoContext);
@@ -63,40 +62,25 @@ function SignInPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const onSubmit = async (data) => {
-    await new Promise((r) => setTimeout(r, 500)); // fake loading
+    try {
+      const loggedInUser = await login(data.identifier, data.password);
 
-    const users = JSON.parse(localStorage.getItem("users")) || [];
+      const from = location.state?.from?.pathname;
 
-    const foundUser = users.find((u) => u.email === data.identifier);
-
-    // کاربر وجود ندارد
-    if (!foundUser) {
-      setError("identifier", {
-        type: "manual",
-        message: "کاربری با این ایمیل پیدا نشد",
+      navigate(from || (loggedInUser.role === "admin" ? "/admin" : "/"), {
+        replace: true,
       });
-      return;
-    }
 
-    const hashedInput = await hashPassword(data.password);
-
-    if (foundUser.password !== hashedInput) {
+      reset();
+    } catch (err) {
+      // The backend returns the same message for "no such user" and
+      // "wrong password" on purpose, so we show it on the password
+      // field either way.
       setError("password", {
         type: "manual",
-        message: "رمز عبور اشتباه است",
+        message: err.message || "ایمیل یا رمز عبور اشتباه است",
       });
-      return;
     }
-
-    login(foundUser);
-
-    const from = location.state?.from?.pathname;
-
-    navigate(from || (foundUser.role === "admin" ? "/admin" : "/"), {
-      replace: true,
-    });
-
-    reset();
   };
 
   const Spinner = () => (

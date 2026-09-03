@@ -1,43 +1,42 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import categoriesData from "../data/categories";
+import { api } from "../lib/api.js";
 
 const CategoryContext = createContext();
 
-const STORAGE_KEY = "coffee-shop-categories";
-
 export function CategoryProvider({ children }) {
-  const [categories, setCategories] = useState(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    if (saved) {
-      return JSON.parse(saved);
+  async function refresh() {
+    setLoading(true);
+    setError(null);
+    try {
+      const apiCategories = await api.getCategories();
+      setCategories(apiCategories);
+    } catch (err) {
+      setError(err.message || "خطا در دریافت دسته‌بندی‌ها");
+    } finally {
+      setLoading(false);
     }
-
-    return categoriesData;
-  });
+  }
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(categories));
-  }, [categories]);
+    refresh();
+  }, []);
 
-  function addCategory(category) {
-    setCategories((prev) => [...prev, category]);
+  async function addCategory(category) {
+    await api.createCategory({ title: category.title, slug: category.slug });
+    await refresh();
   }
 
-  function updateCategory(id, updatedCategory) {
-    setCategories((prev) =>
-      prev.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              ...updatedCategory,
-            }
-          : item,
-      ),
-    );
+  async function updateCategory(id, updatedCategory) {
+    await api.updateCategory(id, updatedCategory);
+    await refresh();
   }
 
-  function deleteCategory(id) {
+  async function deleteCategory(id) {
+    await api.deleteCategory(id);
     setCategories((prev) => prev.filter((item) => item.id !== id));
   }
 
@@ -45,19 +44,17 @@ export function CategoryProvider({ children }) {
     return categories.find((item) => item.id === Number(id));
   }
 
-  function resetCategories() {
-    setCategories(categoriesData);
-  }
-
   return (
     <CategoryContext.Provider
       value={{
         categories,
+        loading,
+        error,
         addCategory,
         updateCategory,
         deleteCategory,
         getCategoryById,
-        resetCategories,
+        refresh,
       }}
     >
       {children}

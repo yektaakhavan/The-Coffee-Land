@@ -1,6 +1,5 @@
 import { useContext, useMemo, useState } from "react";
 
-import seedOrders from "../../data/orders";
 import { OrderContext } from "../../context/OrderContext";
 
 import SearchBox from "../../components/admin/SearchBox";
@@ -25,9 +24,9 @@ function OrdersPage() {
 
   const ITEMS_PER_PAGE = 6;
 
-  // Real orders placed through checkout show up first, seed/demo data fills the rest
+  // All orders now come from the real backend.
   const allOrders = useMemo(
-    () => [...checkoutOrders, ...seedOrders].map(normalizeOrder),
+    () => checkoutOrders.map(normalizeOrder),
     [checkoutOrders],
   );
 
@@ -44,13 +43,8 @@ function OrdersPage() {
     currentPage * ITEMS_PER_PAGE,
   );
 
-  const handleDelete = () => {
-    // Only real (checkout) orders can actually be removed — demo/seed
-    // rows are static sample data with no backing store.
-    if (orderToDelete.source === "checkout") {
-      deleteOrder(orderToDelete.id);
-    }
-
+  const handleDelete = async () => {
+    await deleteOrder(orderToDelete.id);
     setOrderToDelete(null);
   };
 

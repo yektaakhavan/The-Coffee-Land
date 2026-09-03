@@ -27,8 +27,18 @@ const statuses = {
     className: "bg-yellow-100 text-yellow-700",
   },
 
+  processing: {
+    label: "در حال پردازش",
+    className: "bg-blue-100 text-blue-700",
+  },
+
   completed: {
     label: "تکمیل شده",
+    className: "bg-emerald-100 text-emerald-700",
+  },
+
+  delivered: {
+    label: "تحویل داده شده",
     className: "bg-emerald-100 text-emerald-700",
   },
 

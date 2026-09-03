@@ -108,7 +108,6 @@ A few deliberate decisions, for anyone reviewing this project:
 
 ## 📸 Screenshots
 
-
 ![Home page](/src/assets/images/Preview/Home-Banner.png)`.
 
 ---
