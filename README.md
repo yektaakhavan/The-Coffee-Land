@@ -1,10 +1,10 @@
 # ☕ The Coffee Land
 
-A full-featured coffee shop e-commerce application built with **React 19**,
-including a complete **customer storefront** and a **fully functional admin
-dashboard** — product, category, order, coupon, review, and article
-management, all wired end-to-end (a real order placed at checkout actually
-shows up in the admin panel, not just mock data).
+A full-featured coffee shop e-commerce application built with **React 19** on
+the frontend and a **real Node.js REST API** on the backend — a complete
+**customer storefront** and a **fully functional admin dashboard**, wired
+end-to-end to an actual Postgres database (a real order placed at checkout
+shows up in the admin panel because it *is* the same database, not mock data).
 
 ---
 
@@ -17,15 +17,16 @@ shows up in the admin panel, not just mock data).
 - Cart with quantity controls, discount calculation, and free-shipping threshold
 - Checkout form with full client-side validation (React Hook Form + Zod)
 - Toast notifications (e.g. "added to cart") — no page reload, no external UI library
-- Auth: sign up / sign in, protected & guest-only routes, role-based access (admin vs customer)
+- Auth: sign up / sign in with real server-side sessions (JWT), protected &
+  guest-only routes, role-based access (admin vs customer)
 
 ### Admin dashboard
 - Dashboard with sales chart, recent orders, and quick actions
 - **Products** — create/edit with full form validation, image, pricing, inventory
 - **Categories** — full CRUD (the products form reads live from this, so a category
   added here is immediately selectable when creating a product)
-- **Orders** — shows real customer orders (placed via checkout) merged with demo
-  data, with status updates and delete
+- **Orders** — real customer orders, placed via checkout and stored in Postgres,
+  with status updates and delete
 - **Coupons, Reviews, Customers, Articles, Settings** — full CRUD with delete
   confirmation modals throughout
 
@@ -42,16 +43,25 @@ shows up in the admin panel, not just mock data).
 
 ## 🛠️ Tech Stack
 
+### Frontend
 | Layer | Choice |
 |---|---|
 | UI | React 19, React Router 7 |
 | Styling | Tailwind CSS v4 (CSS-first `@theme`, no config file needed) |
 | Forms & validation | React Hook Form + Zod |
-| State | React Context API (no Redux — see *Architecture notes* below) |
+| State | React Context API, talking to the real API (see *Architecture notes*) |
 | Charts | Recharts (admin dashboard) |
 | Icons | react-icons (Font Awesome + Heroicons v2) |
-| Persistence | `localStorage` (this project has no backend — see *Known limitations*) |
+| Testing | Vitest + React Testing Library (unit + component tests) |
 | Tooling | Vite, ESLint |
+
+### Backend (https://github.com/yektaakhavan/coffee-land-backend)
+| Layer | Choice |
+|---|---|
+| Runtime | Node.js, deployed as Vercel Serverless Functions |
+| Database | Postgres |
+| Auth | JWT + bcrypt (server-side password hashing, never stored or compared in plain text) |
+| Deployment | Vercel |
 
 ---
 
@@ -68,8 +78,13 @@ src/
 │   ├── shop/            product card, cart item, star rating, etc.
 │   └── ui/              generic building blocks (modals, Reveal, form shells)
 ├── constants/          static lookup data (statuses, product categories)
-├── context/            Auth, Cart, Order, Product, Category, Toast
-├── data/                seed/demo data (products, orders, reviews, blog posts...)
+├── context/            Auth, Cart, Order, Product, Category, Toast — all
+│                        talk to the backend API (see lib/api.js)
+├── lib/
+│   └── api.js           thin fetch wrapper for every backend call, handles
+│                        the JWT auth header and error normalization
+├── data/                seed/demo data still used for a few non-critical
+│                        sections (blog posts, reviews)
 ├── pages/
 │   ├── admin/           every /admin/* route
 │   ├── auth/            sign in / sign up
@@ -89,13 +104,24 @@ A few deliberate decisions, for anyone reviewing this project:
   domains (auth, cart, products, categories, orders, toasts) — each gets its own
   context instead of one global store. It keeps things simple and readable at
   this scale, at the cost of not scaling as gracefully to a much larger app.
-- **`localStorage` as a mock backend.** Every context persists to
-  `localStorage` and rehydrates on load, so the app behaves like it has a real
-  backend during a demo/review — refresh the page and your cart, products,
-  and orders are still there. `src/utils/normalizeOrder.js` exists specifically
-  to reconcile the shape of a "real" order (placed through checkout) with the
-  static seed data shown by default, so both render identically in the admin
-  table.
+- **Real backend, adapter pattern in the contexts.** Each context (`ProductContext`,
+  `OrderContext`, etc.) fetches from the real API through `src/lib/api.js`, then
+  maps the API's response shape (e.g. Postgres's `category_id`, `total_price`)
+  into the shape the rest of the app already expects (e.g. `category.title`,
+  `totalPrice`). This kept the UI components themselves untouched when the
+  backend was added — only the context layer changed.
+- **Prices are never trusted from the client.** When an order is placed, the
+  backend looks up each product's real price from the database itself — it
+  never uses a price sent by the frontend. This closes an obvious attack
+  vector (submitting a fake, lower price at checkout).
+- **Stock safety via database transactions.** Placing an order runs inside a
+  real Postgres transaction with row-level locking (`SELECT ... FOR UPDATE`),
+  so two customers can't both successfully buy the last unit of a product at
+  the same time.
+- **`src/utils/normalizeOrder.js`** reconciles the shape of a live order
+  (placed through checkout, from the backend) with the shape of static demo
+  orders still used to pad out a couple of admin views, so both render
+  identically in the admin table.
 - **One `routes.jsx`, not nested route files.** All routes live in a single
   file so the whole app's routing can be understood in one read, rather than
   hunting across a routes folder.
@@ -106,45 +132,74 @@ A few deliberate decisions, for anyone reviewing this project:
 
 ---
 
+## 🧪 Testing & quality
+
+- **Unit tests** for pricing and order-normalization logic
+  (`calculateFinalPrice`, `formatPrice`, `normalizeOrder`) — written while
+  fixing a real bug (a negative discount was silently *increasing* the price
+  instead of being rejected; now clamped and covered by a regression test).
+- **Component tests** for `ProductCard` (price/discount display, out-of-stock
+  state, correct product link, image lazy-loading).
+- Run with `npm run test`.
+
+## 🔒 Security notes
+
+- Passwords are hashed server-side with **bcrypt** — never stored or compared
+  as plain text.
+- **JWT**-based sessions; the token is sent as a `Bearer` header on every
+  authenticated request.
+- Order totals are **always computed server-side** from the product catalog,
+  never trusted from the client.
+- Role-based access control: only an authenticated admin can create/edit/
+  delete products, categories, or change order status.
+
+## ⚡ Performance notes
+
+- Route-based code splitting (`React.lazy`) — admin routes aren't downloaded
+  by a customer who never visits `/admin`.
+- Product images use native `loading="lazy"` and `decoding="async"`.
+- `ProductCard` is wrapped in `React.memo` to avoid re-rendering unchanged
+  cards inside product list/grid views.
+
+---
+
 ## 📸 Screenshots
 
-![Home page](/src/assets/images/Preview/Home-Banner.png)`.
+![Home page](/src/assets/images/Preview/Home-Banner.png)
 
 ---
 
 ## 📦 Getting started
 
+### Frontend
 ```bash
 npm install
+cp .env.example .env
+# set VITE_API_URL in .env to your backend's URL
 npm run dev
 ```
-
 Then open `http://localhost:5173`.
 
 ```bash
 npm run build     # production build
 npm run preview   # preview the production build locally
-npm run lint      # run ESLint
+npm run test       # run the test suite
+npm run lint       # run ESLint
 ```
 
-> **Resetting demo data:** everything is stored in your browser's
-> `localStorage`. To start fresh, open DevTools → Application → Local Storage
-> → clear the site's data, then refresh.
+### Backend
+The backend lives in a separate repository — see its own README for setup
+(Postgres schema, environment variables, and Vercel deployment steps).
 
 ---
 
-## 🚧 Known limitations / roadmap
+## 🚧 Roadmap
 
-This is a frontend-only portfolio project — there's no real server, so:
-
-- Data doesn't sync across devices/browsers (it's all `localStorage`)
-- Payment is simulated, not connected to a real gateway
-- No real authentication/authorization (client-side only — don't reuse this
-  auth flow as-is for anything with real user data)
-
-Possible next steps: a real backend (Node/Express or Supabase), a payment
-gateway sandbox integration, and English/Persian language toggle.
-
+- Payment gateway sandbox integration (checkout is currently simulated)
+- Direct image upload in the admin panel (product images currently need a
+  hosted URL — see the backend README for the current workaround)
+- Phone-number login (only email login is implemented server-side today)
+- English/Persian language toggle
 
 <img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png" width="100%" alt="section divider" />
 
