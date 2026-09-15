@@ -1,226 +1,345 @@
+
 # ☕ The Coffee Land
 
-A full-featured coffee shop e-commerce application built with **React 19** on
-the frontend and a **real Node.js REST API** on the backend — a complete
-**customer storefront** and a **fully functional admin dashboard**, wired
-end-to-end to an actual Postgres database (a real order placed at checkout
-shows up in the admin panel because it *is* the same database, not mock data).
+A full-featured coffee shop e-commerce application built with React 19, featuring a customer storefront, authentication, shopping cart, checkout, and a complete admin dashboard connected to a real Node.js REST API and PostgreSQL database.
+
+[![Frontend](https://img.shields.io/badge/Frontend-React%2019-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![Backend](https://img.shields.io/badge/Backend-Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Database](https://img.shields.io/badge/Database-PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 
 ---
 
-## ✨ Features
+## Overview
 
-### Customer-facing storefront
-- Home, About, Contact, Shop, Product detail, Cart, Checkout, Order success
-- Blog / articles with individual article pages
-- Product search, category filter, price range filter, and sorting (price / rating)
-- Cart with quantity controls, discount calculation, and free-shipping threshold
-- Checkout form with full client-side validation (React Hook Form + Zod)
-- Toast notifications (e.g. "added to cart") — no page reload, no external UI library
-- Auth: sign up / sign in with real server-side sessions (JWT), protected &
-  guest-only routes, role-based access (admin vs customer)
+The Coffee Land is a full-stack coffee shop e-commerce application designed to simulate a real-world online store.
 
-### Admin dashboard
-- Dashboard with sales chart, recent orders, and quick actions
-- **Products** — create/edit with full form validation, image, pricing, inventory
-- **Categories** — full CRUD (the products form reads live from this, so a category
-  added here is immediately selectable when creating a product)
-- **Orders** — real customer orders, placed via checkout and stored in Postgres,
-  with status updates and delete
-- **Coupons, Reviews, Customers, Articles, Settings** — full CRUD with delete
-  confirmation modals throughout
+The project includes two main areas:
 
-### Design
-- Custom espresso/brass color system (overrides Tailwind's default palette via
-  a single `@theme` block, so it's consistent across every component)
-- Variable-weight Vazirmatn font (100–900) for real typographic hierarchy
-- Consistent warm color-grade on all photography (`.brand-photo` utility)
-- Scroll-reveal animations, hover motion on product cards, subtle steam
-  animation on the hero illustration
-- RTL-first, fully responsive
+- **Customer storefront** for browsing products, managing a cart, authenticating, and placing orders.
+- **Admin dashboard** for managing products, categories, orders, customers, coupons, reviews, articles, and store settings.
+
+Unlike a frontend-only mockup, the application communicates with a real backend API and PostgreSQL database. Orders created through the customer checkout are stored in the same database and become available in the admin dashboard.
 
 ---
 
-## 🛠️ Tech Stack
+## Features
+
+### Customer Storefront
+
+- Responsive home, shop, product detail, cart, and checkout pages
+- Product search, filtering, sorting, and category browsing
+- Shopping cart with quantity management
+- Discount and free-shipping calculations
+- Checkout form with client-side validation
+- User registration and authentication
+- Protected and guest-only routes
+- Role-based access control
+- Blog and article pages
+- Toast notifications
+- Order success flow
+
+### Admin Dashboard
+
+- Dashboard with sales statistics and charts
+- Product management
+  - Create products
+  - Edit products
+  - Manage pricing and inventory
+  - Assign categories
+- Category management
+- Order management
+- Order status updates
+- Coupon management
+- Customer management
+- Review management
+- Article management
+- Store settings
+- Delete confirmation flows
+
+---
+
+## Tech Stack
 
 ### Frontend
-| Layer | Choice |
+
+| Technology | Purpose |
 |---|---|
-| UI | React 19, React Router 7 |
-| Styling | Tailwind CSS v4 (CSS-first `@theme`, no config file needed) |
-| Forms & validation | React Hook Form + Zod |
-| State | React Context API, talking to the real API (see *Architecture notes*) |
-| Charts | Recharts (admin dashboard) |
-| Icons | react-icons (Font Awesome + Heroicons v2) |
-| Testing | Vitest + React Testing Library (unit + component tests) |
-| Tooling | Vite, ESLint |
-
-### Backend (https://github.com/yektaakhavan/coffee-land-backend)
-| Layer | Choice |
-|---|---|
-| Runtime | Node.js, deployed as Vercel Serverless Functions |
-| Database | Postgres |
-| Auth | JWT + bcrypt (server-side password hashing, never stored or compared in plain text) |
-| Deployment | Vercel |
-
----
-
-## 📂 Project Structure
-
-```
-src/
-├── assets/            fonts, images
-├── components/
-│   ├── admin/          admin-only UI (tables, forms, dashboard widgets)
-│   ├── checkout/        checkout form + summary
-│   ├── layout/          headers, footers, sidebars for public/admin
-│   ├── shared/          route guards (ProtectedRoute, GuestRoute)
-│   ├── shop/            product card, cart item, star rating, etc.
-│   └── ui/              generic building blocks (modals, Reveal, form shells)
-├── constants/          static lookup data (statuses, product categories)
-├── context/            Auth, Cart, Order, Product, Category, Toast — all
-│                        talk to the backend API (see lib/api.js)
-├── lib/
-│   └── api.js           thin fetch wrapper for every backend call, handles
-│                        the JWT auth header and error normalization
-├── data/                seed/demo data still used for a few non-critical
-│                        sections (blog posts, reviews)
-├── pages/
-│   ├── admin/           every /admin/* route
-│   ├── auth/            sign in / sign up
-│   └── public/          every customer-facing route
-├── utils/               formatPrice, calculateFinalPrice, normalizeOrder...
-├── validation/          Zod schemas
-└── routes.jsx           the single source of truth for all routes
-```
-
----
-
-## 🧠 Architecture notes
-
-A few deliberate decisions, for anyone reviewing this project:
-
-- **Context API instead of Redux/Zustand.** The app has clear, mostly-independent
-  domains (auth, cart, products, categories, orders, toasts) — each gets its own
-  context instead of one global store. It keeps things simple and readable at
-  this scale, at the cost of not scaling as gracefully to a much larger app.
-- **Real backend, adapter pattern in the contexts.** Each context (`ProductContext`,
-  `OrderContext`, etc.) fetches from the real API through `src/lib/api.js`, then
-  maps the API's response shape (e.g. Postgres's `category_id`, `total_price`)
-  into the shape the rest of the app already expects (e.g. `category.title`,
-  `totalPrice`). This kept the UI components themselves untouched when the
-  backend was added — only the context layer changed.
-- **Prices are never trusted from the client.** When an order is placed, the
-  backend looks up each product's real price from the database itself — it
-  never uses a price sent by the frontend. This closes an obvious attack
-  vector (submitting a fake, lower price at checkout).
-- **Stock safety via database transactions.** Placing an order runs inside a
-  real Postgres transaction with row-level locking (`SELECT ... FOR UPDATE`),
-  so two customers can't both successfully buy the last unit of a product at
-  the same time.
-- **`src/utils/normalizeOrder.js`** reconciles the shape of a live order
-  (placed through checkout, from the backend) with the shape of static demo
-  orders still used to pad out a couple of admin views, so both render
-  identically in the admin table.
-- **One `routes.jsx`, not nested route files.** All routes live in a single
-  file so the whole app's routing can be understood in one read, rather than
-  hunting across a routes folder.
-- **Tailwind v4's `@theme`.** The whole color identity is defined once, by
-  overriding Tailwind's built-in `amber` scale — every `bg-amber-800` /
-  `text-amber-500` class already used across ~30 components automatically
-  picks up the new palette, with zero per-component changes.
-
----
-
-## 🧪 Testing & quality
-
-- **Unit tests** for pricing and order-normalization logic
-  (`calculateFinalPrice`, `formatPrice`, `normalizeOrder`) — written while
-  fixing a real bug (a negative discount was silently *increasing* the price
-  instead of being rejected; now clamped and covered by a regression test).
-- **Component tests** for `ProductCard` (price/discount display, out-of-stock
-  state, correct product link, image lazy-loading).
-- Run with `npm run test`.
-
-## 🔒 Security notes
-
-- Passwords are hashed server-side with **bcrypt** — never stored or compared
-  as plain text.
-- **JWT**-based sessions; the token is sent as a `Bearer` header on every
-  authenticated request.
-- Order totals are **always computed server-side** from the product catalog,
-  never trusted from the client.
-- Role-based access control: only an authenticated admin can create/edit/
-  delete products, categories, or change order status.
-
-## ⚡ Performance notes
-
-- Route-based code splitting (`React.lazy`) — admin routes aren't downloaded
-  by a customer who never visits `/admin`.
-- Product images use native `loading="lazy"` and `decoding="async"`.
-- `ProductCard` is wrapped in `React.memo` to avoid re-rendering unchanged
-  cards inside product list/grid views.
-
----
-
-## 📸 Screenshots
-
-![Home page](/src/assets/images/Preview/Home-Banner.png)
-
----
-
-## 📦 Getting started
-
-### Frontend
-```bash
-npm install
-cp .env.example .env
-# set VITE_API_URL in .env to your backend's URL
-npm run dev
-```
-Then open `http://localhost:5173`.
-
-```bash
-npm run build     # production build
-npm run preview   # preview the production build locally
-npm run test       # run the test suite
-npm run lint       # run ESLint
-```
+| React 19 | UI development |
+| React Router 7 | Client-side routing |
+| Tailwind CSS v4 | Styling and responsive UI |
+| React Hook Form | Form management |
+| Zod | Form validation |
+| React Context API | State management |
+| Recharts | Admin dashboard charts |
+| react-icons | Icons |
+| Vitest | Unit testing |
+| React Testing Library | Component testing |
+| Vite | Development and build tooling |
 
 ### Backend
-The backend lives in a separate repository — see its own README for setup
-(Postgres schema, environment variables, and Vercel deployment steps).
+
+| Technology | Purpose |
+|---|---|
+| Node.js | Backend runtime |
+| REST API | Client-server communication |
+| PostgreSQL | Database |
+| JWT | Authentication |
+| bcrypt | Password hashing |
+| Vercel | Deployment |
+
+Backend repository:
+
+**[Coffee Land Backend](https://github.com/yektaakhavan/coffee-land-backend)**
 
 ---
 
-## 🚧 Roadmap
+## Project Structure
 
-- Payment gateway sandbox integration (checkout is currently simulated)
-- Direct image upload in the admin panel (product images currently need a
-  hosted URL — see the backend README for the current workaround)
-- Phone-number login (only email login is implemented server-side today)
-- English/Persian language toggle
+```text
+src/
+├── assets/
+│   ├── fonts/
+│   └── images/
+│
+├── components/
+│   ├── admin/
+│   ├── checkout/
+│   ├── layout/
+│   ├── shared/
+│   ├── shop/
+│   └── ui/
+│
+├── constants/
+│
+├── context/
+│   ├── AuthContext
+│   ├── CartContext
+│   ├── OrderContext
+│   ├── ProductContext
+│   ├── CategoryContext
+│   └── ToastContext
+│
+├── data/
+│
+├── lib/
+│   └── api.js
+│
+├── pages/
+│   ├── admin/
+│   ├── auth/
+│   └── public/
+│
+├── utils/
+│
+├── validation/
+│
+└── routes.jsx
+````
 
-<img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png" width="100%" alt="section divider" />
+---
 
-## 👨‍💻 Author
+## Key Implementation Details
+
+### Context-based State Management
+
+The application uses React Context API to separate state into independent domains such as:
+
+* Authentication
+* Cart
+* Products
+* Categories
+* Orders
+* Toast notifications
+
+This keeps each domain isolated and makes the application easier to understand and maintain.
+
+### API Adapter Layer
+
+All backend communication goes through a centralized API utility:
+
+```text
+src/lib/api.js
+```
+
+The context layer communicates with the backend through this API wrapper and maps backend response data into the structures expected by the UI.
+
+This keeps API-specific logic out of presentation components.
+
+### Server-side Price Validation
+
+Product prices are never trusted from the client during checkout.
+
+When an order is placed, the backend retrieves the current product prices from the database and calculates the order total server-side.
+
+This prevents a client from manipulating the product price before submitting an order.
+
+### Transaction-safe Stock Management
+
+Order creation uses a PostgreSQL transaction with row-level locking.
+
+This prevents two simultaneous customers from successfully purchasing the final available unit of the same product.
+
+### Authentication & Authorization
+
+The application uses:
+
+* JWT-based authentication
+* bcrypt password hashing
+* Protected routes
+* Guest-only routes
+* Role-based access control
+
+Administrative actions are restricted to authenticated users with the appropriate role.
+
+---
+
+## Testing
+
+The project includes unit and component tests using **Vitest** and **React Testing Library**.
+
+Tested areas include:
+
+* Price calculation
+* Order normalization
+* Price formatting
+* Product card rendering
+* Discount display
+* Out-of-stock state
+* Product links
+* Image lazy loading
+
+Run the test suite with:
+
+```bash
+npm run test
+```
+
+---
+
+## Performance
+
+Several frontend performance techniques are implemented:
+
+* Route-based code splitting with `React.lazy`
+* Lazy loading for product images
+* Asynchronous image decoding
+* `React.memo` for reusable product cards
+* Production build optimization through Vite
+
+---
+
+## Design
+
+The interface follows a custom coffee-inspired visual system.
+
+* Warm espresso and brass color palette
+* Vazirmatn variable font
+* RTL-first layout
+* Responsive design
+* Consistent image treatment
+* Subtle scroll and hover animations
+* Responsive customer storefront and admin dashboard
+
+---
+
+## Screenshots
+
+### Customer Storefront
+
+![The Coffee Land Home Page](./src/assets/images/Preview/Home-Banner.png)
+
+### Admin Dashboard
+
+<!-- Add admin dashboard screenshot here -->
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+* Node.js
+* npm
+* PostgreSQL
+
+### Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/yektaakhavan/The-Coffee-Land.git
+cd The-Coffee-Land
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Create your environment file:
+
+```bash
+cp .env.example .env
+```
+
+Set your backend API URL in `.env`:
+
+```env
+VITE_API_URL=your_backend_url
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+The application will be available at:
+
+```text
+http://localhost:5173
+```
+
+---
+
+## Available Scripts
+
+| Command           | Description                  |
+| ----------------- | ---------------------------- |
+| `npm run dev`     | Start the development server |
+| `npm run build`   | Create a production build    |
+| `npm run preview` | Preview the production build |
+| `npm run test`    | Run the test suite           |
+| `npm run lint`    | Run ESLint                   |
+
+---
+
+## Roadmap
+
+* [ ] Payment gateway sandbox integration
+* [ ] Direct product image upload
+* [ ] Phone-number authentication
+* [ ] English / Persian language switcher
+
+---
+
+## Author
 
 **Yekta Akhavan**
 
-<p align="center">
-  <a href="mailto:yekta.akhavan.dev@gmail.com">
-    <img src="https://img.shields.io/badge/Gmail-yekta.akhavan.dev%40gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white&labelColor=0D1117" alt="Email" />
-  </a>
-  &nbsp;
-  <a href="https://www.linkedin.com/in/yekta-akhavan/">
-    <img src="https://img.shields.io/badge/LinkedIn-Yekta%20Akhavan-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=0D1117" alt="LinkedIn" />
-  </a>
-  &nbsp;
-  <a href="https://www.instagram.com/yektaakhavan.dev?igsi=d2Vya2RqazhqZ2Z2">
-    <img src="https://img.shields.io/badge/Instagram-yekta--akhavan-E4405F?style=for-the-badge&logo=instagram&logoColor=white&labelColor=0D1117" alt="Instagram" />
-  </a>
-  &nbsp;
-  <a href="https://yekta-akhavan.vercel.app/">
-    <img src="https://img.shields.io/badge/Portfolio-yekta--akhavan.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white&labelColor=0D1117" alt="Portfolio" />
-  </a>
-</p>
+Frontend Developer focused on building responsive and maintainable web applications with React, JavaScript, TypeScript, and modern frontend tools.
+
+* [GitHub](https://github.com/yektaakhavan)
+* [LinkedIn](https://www.linkedin.com/in/yekta-akhavan/)
+* [Portfolio](https://yekta-akhavan.vercel.app/)
+* [Instagram](https://www.instagram.com/yektaakhavan.dev/)
+* [Email](mailto:yekta.akhavan.dev@gmail.com)
+
+```
+
+**این نسخه را می‌توانی مستقیماً جایگزین محتوای `README.md` پروژه `The-Coffee-Land` کنی.**  
+فقط دو مورد را فعلاً عمداً placeholder گذاشتم: **Live Demo** چون URL آن را هنوز تأیید نکرده‌ایم، و **عکس Admin Dashboard** چون در README فعلی تصویرش وجود نداشت.
+```
