@@ -338,8 +338,3 @@ Frontend Developer focused on building responsive and maintainable web applicati
 * [Instagram](https://www.instagram.com/yektaakhavan.dev/)
 * [Email](mailto:yekta.akhavan.dev@gmail.com)
 
-```
-
-**این نسخه را می‌توانی مستقیماً جایگزین محتوای `README.md` پروژه `The-Coffee-Land` کنی.**  
-فقط دو مورد را فعلاً عمداً placeholder گذاشتم: **Live Demo** چون URL آن را هنوز تأیید نکرده‌ایم، و **عکس Admin Dashboard** چون در README فعلی تصویرش وجود نداشت.
-```
