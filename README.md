@@ -324,17 +324,28 @@ http://localhost:5173
 * [ ] Phone-number authentication
 * [ ] English / Persian language switcher
 
----
+آخر همه ی readme هام
 
-## Author
+<img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png" width="100%" alt="section divider" />
+
+## 👨‍💻 Author
 
 **Yekta Akhavan**
 
-Frontend Developer focused on building responsive and maintainable web applications with React, JavaScript, TypeScript, and modern frontend tools.
-
-* [GitHub](https://github.com/yektaakhavan)
-* [LinkedIn](https://www.linkedin.com/in/yekta-akhavan/)
-* [Portfolio](https://yekta-akhavan.vercel.app/)
-* [Instagram](https://www.instagram.com/yektaakhavan.dev/)
-* [Email](mailto:yekta.akhavan.dev@gmail.com)
-
+<p align="center">
+  <a href="mailto:yekta.akhavan.dev@gmail.com">
+    <img src="https://img.shields.io/badge/Gmail-yekta.akhavan.dev%40gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white&labelColor=0D1117" alt="Email" />
+  </a>
+  &nbsp;
+  <a href="https://www.linkedin.com/in/yekta-akhavan/">
+    <img src="https://img.shields.io/badge/LinkedIn-Yekta%20Akhavan-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=0D1117" alt="LinkedIn" />
+  </a>
+  &nbsp;
+  <a href="https://www.instagram.com/yektaakhavan.dev?igsi=d2Vya2RqazhqZ2Z2">
+    <img src="https://img.shields.io/badge/Instagram-yekta--akhavan-E4405F?style=for-the-badge&logo=instagram&logoColor=white&labelColor=0D1117" alt="Instagram" />
+  </a>
+  &nbsp;
+  <a href="https://yekta-akhavan.vercel.app/">
+    <img src="https://img.shields.io/badge/Portfolio-yekta--akhavan.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white&labelColor=0D1117" alt="Portfolio" />
+  </a>
+</p>
