@@ -324,8 +324,6 @@ http://localhost:5173
 * [ ] Phone-number authentication
 * [ ] English / Persian language switcher
 
-آخر همه ی readme هام
-
 <img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png" width="100%" alt="section divider" />
 
 ## 👨‍💻 Author
