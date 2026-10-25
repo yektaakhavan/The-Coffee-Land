@@ -1,26 +1,60 @@
-
 # ☕ The Coffee Land
 
-A full-featured coffee shop e-commerce application built with React 19, featuring a customer storefront, authentication, shopping cart, checkout, and a complete admin dashboard connected to a real Node.js REST API and PostgreSQL database.
+A full-stack coffee shop e-commerce application: a React 19 storefront and admin dashboard connected to a real Node.js REST API and PostgreSQL database.
 
-[![Frontend](https://img.shields.io/badge/Frontend-React%2019-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
-[![Backend](https://img.shields.io/badge/Backend-Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
-[![Database](https://img.shields.io/badge/Database-PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-the--coffee--land.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://the-coffee-land.vercel.app/)
+[![Backend Repo](https://img.shields.io/badge/Backend-coffee--land--backend-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://github.com/yektaakhavan/coffee-land-backend)
+
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?logo=tailwindcss&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
+![Vitest](https://img.shields.io/badge/Tested_with-Vitest-6E9F18?logo=vitest&logoColor=white)
+
+> This repository contains the **frontend**. The API lives in a separate repo: [coffee-land-backend](https://github.com/yektaakhavan/coffee-land-backend).
+
+---
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Screenshots](#screenshots)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Architecture & Key Decisions](#architecture--key-decisions)
+- [Project Structure](#project-structure)
+- [Testing](#testing)
+- [Performance](#performance)
+- [Getting Started](#getting-started)
+- [Available Scripts](#available-scripts)
+- [Roadmap](#roadmap)
+- [Author](#author)
 
 ---
 
 ## Overview
 
-The Coffee Land is a full-stack coffee shop e-commerce application designed to simulate a real-world online store.
+The Coffee Land simulates a real-world online store with two main areas:
 
-The project includes two main areas:
+- **Customer storefront**: browse products, manage a cart, register/log in, and place orders.
+- **Admin dashboard**: manage products, categories, orders, customers, coupons, reviews, articles, and store settings.
 
-- **Customer storefront** for browsing products, managing a cart, authenticating, and placing orders.
-- **Admin dashboard** for managing products, categories, orders, customers, coupons, reviews, articles, and store settings.
+Unlike a frontend-only mockup, the app talks to a real backend API and database. An order placed at checkout is stored in PostgreSQL and immediately appears in the admin dashboard.
 
-Unlike a frontend-only mockup, the application communicates with a real backend API and PostgreSQL database. Orders created through the customer checkout are stored in the same database and become available in the admin dashboard.
+The interface is **RTL-first** (Persian) with a custom coffee-inspired design system.
 
----
+## Screenshots
+
+### Customer Storefront
+
+![Home page](src/assets/images/Preview/Home-Banner.png)
+
+### Admin Dashboard
+
+<!-- TODO: add 1-2 dashboard screenshots, e.g. src/assets/images/Preview/Admin-Dashboard.png -->
+
+![Admin dashboard](src/assets/images/Preview/Admin-Dashboard.png)
 
 ## Features
 
@@ -28,79 +62,66 @@ Unlike a frontend-only mockup, the application communicates with a real backend 
 
 - Responsive home, shop, product detail, cart, and checkout pages
 - Product search, filtering, sorting, and category browsing
-- Shopping cart with quantity management
-- Discount and free-shipping calculations
-- Checkout form with client-side validation
-- User registration and authentication
-- Protected and guest-only routes
-- Role-based access control
+- Cart with quantity management, discount and free-shipping calculation
+- Checkout form with client-side validation (React Hook Form + Zod)
+- Registration and authentication
+- Protected and guest-only routes, role-based access control
 - Blog and article pages
-- Toast notifications
-- Order success flow
+- Toast notifications and an order success flow
 
 ### Admin Dashboard
 
-- Dashboard with sales statistics and charts
-- Product management
-  - Create products
-  - Edit products
-  - Manage pricing and inventory
-  - Assign categories
-- Category management
-- Order management
-- Order status updates
-- Coupon management
-- Customer management
-- Review management
-- Article management
+- Sales statistics and charts
+- Products: create, edit, pricing, inventory, categories
+- Orders and order status updates
+- Coupons, customers, reviews, and articles
 - Store settings
 - Delete confirmation flows
 
----
-
 ## Tech Stack
 
-### Frontend
+### Frontend (this repo)
 
-| Technology | Purpose |
-|---|---|
-| React 19 | UI development |
-| React Router 7 | Client-side routing |
-| Tailwind CSS v4 | Styling and responsive UI |
-| React Hook Form | Form management |
-| Zod | Form validation |
-| React Context API | State management |
-| Recharts | Admin dashboard charts |
-| react-icons | Icons |
-| Vitest | Unit testing |
-| React Testing Library | Component testing |
-| Vite | Development and build tooling |
+| Technology            | Purpose                       |
+| --------------------- | ----------------------------- |
+| React 19              | UI                            |
+| React Router 7        | Client-side routing           |
+| Tailwind CSS v4       | Styling and responsive layout |
+| React Hook Form + Zod | Forms and validation          |
+| React Context API     | Domain-based state management |
+| Recharts              | Admin dashboard charts        |
+| Vitest + RTL          | Unit and component tests      |
+| Vite                  | Dev server and build          |
 
-### Backend
+### Backend ([separate repo](https://github.com/yektaakhavan/coffee-land-backend))
 
-| Technology | Purpose |
-|---|---|
-| Node.js | Backend runtime |
-| REST API | Client-server communication |
-| PostgreSQL | Database |
-| JWT | Authentication |
-| bcrypt | Password hashing |
-| Vercel | Deployment |
+| Technology | Purpose                     |
+| ---------- | --------------------------- |
+| Node.js    | Runtime                     |
+| REST API   | Client-server communication |
+| PostgreSQL | Database                    |
+| JWT        | Authentication              |
+| bcrypt     | Password hashing            |
 
-Backend repository:
+Deployed on **Vercel**.
 
-**[Coffee Land Backend](https://github.com/yektaakhavan/coffee-land-backend)**
+## Architecture & Key Decisions
 
----
+**Context-based state, split by domain.** Auth, cart, products, categories, orders, and toasts each have their own context, so every domain stays isolated and easy to reason about.
+
+**Centralized API layer.** All backend communication goes through `src/lib/api.js`. Contexts call this wrapper and map backend responses into the shapes the UI expects, which keeps API details out of presentation components.
+
+**Server-side price validation.** Prices are never trusted from the client. At checkout, the backend reads current prices from the database and computes the order total itself, so a manipulated request cannot change what a customer pays.
+
+**Transaction-safe stock management.** Order creation uses a PostgreSQL transaction with row-level locking, so two customers cannot both buy the last unit of a product.
+
+**Authentication & authorization.** JWT-based auth, bcrypt password hashing, protected and guest-only routes, and role-based access control. Admin actions require an authenticated user with the right role.
 
 ## Project Structure
 
-```text
+```
 src/
-├── assets/
-│   ├── fonts/
-│   └── images/
-│
+├── assets/          # fonts, images
 ├── components/
 │   ├── admin/
 │   ├── checkout/
@@ -108,202 +129,72 @@ src/
 │   ├── shared/
 │   ├── shop/
 │   └── ui/
-│
 ├── constants/
-│
-├── context/
-│   ├── AuthContext
-│   ├── CartContext
-│   ├── OrderContext
-│   ├── ProductContext
-│   ├── CategoryContext
-│   └── ToastContext
-│
+├── context/         # Auth, Cart, Order, Product, Category, Toast
 ├── data/
-│
 ├── lib/
-│   └── api.js
-│
+│   └── api.js       # centralized API client
 ├── pages/
 │   ├── admin/
 │   ├── auth/
 │   └── public/
-│
 ├── utils/
-│
-├── validation/
-│
+├── validation/      # Zod schemas
 └── routes.jsx
-````
-
----
-
-## Key Implementation Details
-
-### Context-based State Management
-
-The application uses React Context API to separate state into independent domains such as:
-
-* Authentication
-* Cart
-* Products
-* Categories
-* Orders
-* Toast notifications
-
-This keeps each domain isolated and makes the application easier to understand and maintain.
-
-### API Adapter Layer
-
-All backend communication goes through a centralized API utility:
-
-```text
-src/lib/api.js
 ```
-
-The context layer communicates with the backend through this API wrapper and maps backend response data into the structures expected by the UI.
-
-This keeps API-specific logic out of presentation components.
-
-### Server-side Price Validation
-
-Product prices are never trusted from the client during checkout.
-
-When an order is placed, the backend retrieves the current product prices from the database and calculates the order total server-side.
-
-This prevents a client from manipulating the product price before submitting an order.
-
-### Transaction-safe Stock Management
-
-Order creation uses a PostgreSQL transaction with row-level locking.
-
-This prevents two simultaneous customers from successfully purchasing the final available unit of the same product.
-
-### Authentication & Authorization
-
-The application uses:
-
-* JWT-based authentication
-* bcrypt password hashing
-* Protected routes
-* Guest-only routes
-* Role-based access control
-
-Administrative actions are restricted to authenticated users with the appropriate role.
-
----
 
 ## Testing
 
-The project includes unit and component tests using **Vitest** and **React Testing Library**.
+Unit and component tests use **Vitest** and **React Testing Library**.
 
-Tested areas include:
+Covered areas:
 
-* Price calculation
-* Order normalization
-* Price formatting
-* Product card rendering
-* Discount display
-* Out-of-stock state
-* Product links
-* Image lazy loading
-
-Run the test suite with:
+- Price calculation, price formatting, order normalization
+- Product card rendering, discount display, out-of-stock state
+- Product links and image lazy loading
 
 ```bash
 npm run test
 ```
 
----
-
 ## Performance
 
-Several frontend performance techniques are implemented:
-
-* Route-based code splitting with `React.lazy`
-* Lazy loading for product images
-* Asynchronous image decoding
-* `React.memo` for reusable product cards
-* Production build optimization through Vite
-
----
-
-## Design
-
-The interface follows a custom coffee-inspired visual system.
-
-* Warm espresso and brass color palette
-* Vazirmatn variable font
-* RTL-first layout
-* Responsive design
-* Consistent image treatment
-* Subtle scroll and hover animations
-* Responsive customer storefront and admin dashboard
-
----
-
-## Screenshots
-
-### Customer Storefront
-
-![The Coffee Land Home Page](./src/assets/images/Preview/Home-Banner.png)
-
-### Admin Dashboard
-
-<!-- Add admin dashboard screenshot here -->
-
----
+- Route-based code splitting with `React.lazy`
+- Lazy loading and async decoding for product images
+- `React.memo` for reusable product cards
+- Production build optimization through Vite
 
 ## Getting Started
 
 ### Prerequisites
 
-Make sure you have the following installed:
-
-* Node.js
-* npm
-* PostgreSQL
+- Node.js and npm
+- A running instance of the [backend API](https://github.com/yektaakhavan/coffee-land-backend) (which requires PostgreSQL)
 
 ### Installation
-
-Clone the repository:
 
 ```bash
 git clone https://github.com/yektaakhavan/The-Coffee-Land.git
 cd The-Coffee-Land
-```
-
-Install dependencies:
-
-```bash
 npm install
-```
-
-Create your environment file:
-
-```bash
 cp .env.example .env
 ```
 
-Set your backend API URL in `.env`:
+Set the backend URL in `.env`:
 
 ```env
-VITE_API_URL=your_backend_url
+VITE_API_URL=http://localhost:5000/api
 ```
 
-Start the development server:
+> Adjust the URL and port to match your backend setup. Never commit real secrets: `.env` is git-ignored, and `.env.example` only contains placeholders.
+
+Start the dev server:
 
 ```bash
 npm run dev
 ```
 
-The application will be available at:
-
-```text
-http://localhost:5173
-```
-
----
+The app is available at `http://localhost:5173`.
 
 ## Available Scripts
 
@@ -315,35 +206,18 @@ http://localhost:5173
 | `npm run test`    | Run the test suite           |
 | `npm run lint`    | Run ESLint                   |
 
----
-
 ## Roadmap
 
-* [ ] Payment gateway sandbox integration
-* [ ] Direct product image upload
-* [ ] Phone-number authentication
-* [ ] English / Persian language switcher
+- [ ] Payment gateway sandbox integration
+- [ ] Direct product image upload
+- [ ] Phone-number authentication
+- [ ] English / Persian language switcher
+- [ ] End-to-end tests with Playwright
 
-<img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png" width="100%" alt="section divider" />
-
-## 👨‍💻 Author
+## Author
 
 **Yekta Akhavan**
 
-<p align="center">
-  <a href="mailto:yekta.akhavan.dev@gmail.com">
-    <img src="https://img.shields.io/badge/Gmail-yekta.akhavan.dev%40gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white&labelColor=0D1117" alt="Email" />
-  </a>
-  &nbsp;
-  <a href="https://www.linkedin.com/in/yekta-akhavan/">
-    <img src="https://img.shields.io/badge/LinkedIn-Yekta%20Akhavan-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=0D1117" alt="LinkedIn" />
-  </a>
-  &nbsp;
-  <a href="https://www.instagram.com/yektaakhavan.dev?igsi=d2Vya2RqazhqZ2Z2">
-    <img src="https://img.shields.io/badge/Instagram-yekta--akhavan-E4405F?style=for-the-badge&logo=instagram&logoColor=white&labelColor=0D1117" alt="Instagram" />
-  </a>
-  &nbsp;
-  <a href="https://yekta-akhavan.vercel.app/">
-    <img src="https://img.shields.io/badge/Portfolio-yekta--akhavan.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white&labelColor=0D1117" alt="Portfolio" />
-  </a>
-</p>
+[![Gmail](https://img.shields.io/badge/Gmail-yekta.akhavan.dev@gmail.com-EA4335?style=flat-square&logo=gmail&logoColor=white)](mailto:yekta.akhavan.dev@gmail.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Yekta_Akhavan-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/yekta-akhavan/)
+[![Portfolio](https://img.shields.io/badge/Portfolio-yekta--akhavan.vercel.app-000000?style=flat-square&logo=vercel&logoColor=white)](https://yekta-akhavan.vercel.app/)
